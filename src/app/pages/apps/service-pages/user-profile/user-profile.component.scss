@@ -1,0 +1,86 @@
+@import '~src/assets/sass/variables';
+:host {
+    .personal-info-card {
+         ::ng-deep {
+            .card-content {
+                padding-top: 0 !important;
+            }
+        }
+        .user-actions {
+            margin-top: -50px;
+        }
+    }
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -($module-rem / 2);
+        .tc-badge {
+            margin: $module-rem / 2;
+        }
+    }
+    .mr-left-10 {
+        margin-left: 10px;
+        @media #{$max767} {
+            margin-left: 5px;
+        }
+    }
+}
+
+.custom-log {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: #828181;
+}
+
+.custom-capital {
+    text-transform: capitalize;
+}
+
+.page-title {
+    color: rgba(31, 32, 34, 0.5);
+    font-size: 2rem;
+    margin: 0 0 1.42857143rem;
+}
+
+.label-box {
+    align-items: flex-end;
+    align-content: center;
+    display: flex;
+    padding-left: 20px;
+}
+
+.error-bt {
+    color: #ff0000;
+    display: block;
+    margin: 5px 0 0 22px;
+    font-size: 13px;
+}
+
+.progress-bar {
+    position: absolute !important;
+    height: 100% !important;
+}
+
+.progress {
+    display: flex;
+    height: 2rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    position: relative;
+}
+
+.progressText {
+    margin: 14px 28px 0 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    @media #{$max767} {
+        letter-spacing: 1.8px;
+        line-height: 2.5;
+        margin: 0;
+    }
+}

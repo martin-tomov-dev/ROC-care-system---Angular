@@ -1,0 +1,87 @@
+[
+  {
+    "title": "ROC",
+    "groupTitle": true
+  },
+  {
+    "title": "Dashboard",
+    "icon": {
+      "class": "icofont-home"
+    },
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "ROC Admin",
+    "icon": {
+      "class": "icofont-user-suited"
+    },
+    "routing": "roc_admin"
+  },
+
+  {
+    "title": "Hospitals/Care Homes",
+    "icon": {
+      "class": "icofont-building-alt"
+    },
+    "routing": "hospitals"
+  },
+  {
+    "title": "CHM Group",
+    "icon": {
+      "class": "icofont-building-alt"
+    },
+    "routing": "chm-group"
+  },
+  {
+    "title": "Care Home Manager",
+    "icon": {
+      "class": "icofont-user-male"
+    },
+    "routing": "carehome_manager"
+  },
+  {
+    "title": "Carers/Nurse",
+    "icon": {
+      "class": "icofont-nurse"
+    },
+    "routing": "carers"
+  },
+  {
+    "title": "Assessment",
+    "icon": {
+      "class": "icofont-prescription"
+    },
+    "routing": "assessment-data"
+  },
+  {
+    "title": "Residents",
+    "icon": {
+      "class": "icofont-people"
+    },
+    "routing": "patients"
+  },
+ 
+  {
+    "title": "Actions",
+    "icon": {
+      "class": "icofont-ui-pointer"
+    },
+    "routing": "actions"
+  },
+
+  {
+    "title": "Point Of Entry",
+    "icon": {
+      "class": "icofont-location-pin"
+    },
+    "routing": "point_of_entry"
+  },
+  {
+    "title": "Patient Level",
+    "icon": {
+      "class": "icofont-glass"
+    },
+    "routing": "patient_level"
+  }
+
+]

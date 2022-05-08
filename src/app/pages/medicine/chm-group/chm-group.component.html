@@ -1,0 +1,198 @@
+<tc-card class="mb-0">
+  <div class="col col-12 col-md-12 col-xl-4">
+    <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
+      <div class="row align-items-center">
+        <div class="col col-3">
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-user-suited'"
+            [padding]="0"></tc-icon>
+        </div>
+
+        <div class="col col-9">
+          <h4 class="mt-0 mb-1 page-title">{{'CHM Group' | translate}} - {{chm_group.length}}</h4>
+        </div>
+      </div>
+    </tc-card>
+  </div>
+
+  <tc-table [rows]="chm_group" [hovered]="true" [pagination]="true" [search]="true" [headerBgColor]="'#336cfb'"
+    [headerColor]="'#fff'">
+
+    <tc-table-col [columnTitle]="'First name'" [columnName]="'fname'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Last name'" [columnName]="'lname'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Email'" [columnName]="'email'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="d-flex align-items-center nowrap" [tcColor]="'#336cfb'">
+          {{ value }}
+        </span>
+      </ng-template>
+    </tc-table-col>
+    <!-- <tc-table-col [columnTitle]="'Hospital'" [columnName]="'hospitalName'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col> -->
+
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont-ui-edit'" [view]="'info'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="edit(row)"></button>
+
+          <button tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="remove(row)"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+</tc-card>
+
+<div class="add-action-box">
+  <button tc-button [afterIcon]="'icofont-building-alt'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Care Home Manager Group', modalFooter)"></button>
+</div>
+<!-- Modal delete -->
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="deleteOk()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="chmGroupForm" novalidate>
+
+      <div class="row">
+        <tc-form-group class="col-lg-6">
+
+          <tc-input [placeholder]="'First Name'" formControlName="fname"></tc-input>
+          <div *ngIf="submitted && f.fname.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.fname.errors?.required">First name is required</div>
+            <div class="error-bt" *ngIf="f.fname.errors?.pattern">Enter valid first name</div>
+          </div>
+        </tc-form-group>
+
+        <tc-form-group class="col-lg-6">
+          <tc-input [placeholder]="'Last Name'" formControlName="lname"></tc-input>
+          <div *ngIf="submitted && f.lname.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.lname.errors?.required">Last name is required</div>
+            <div class="error-bt" *ngIf="f.lname.errors?.pattern">Enter valid last name</div>
+          </div>
+        </tc-form-group>
+      </div>
+      <tc-form-group>
+        <tc-select [placeholder]="'Select Hospitals'" [multiple]="true" formControlName="hospital"
+          [options]="hospitals"></tc-select>
+        <div *ngIf="submitted && f.hospital.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.hospital.errors?.required">Hospital is required</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <div class="row">
+          <div class="label-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <label> Allowed number of hospitals</label>
+          </div>
+          <div class="input-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <tc-input [placeholder]="'Allowed number of hospitals'" formControlName="num_hospitals"></tc-input>
+            <div *ngIf="submitted && f.num_hospitals.errors">
+              <div class="error-bt" *ngIf="f.num_hospitals.errors?.pattern">Enter valid number</div>
+            </div>
+          </div>
+      </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <div class="row">
+          <div class="label-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <label> Allowed number of Carehome managers</label>
+          </div>
+          <div class="input-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <tc-input [placeholder]="'Allowed number of Carehome managers'" formControlName="num_chm"></tc-input>
+            <div *ngIf="submitted && f.num_chm.errors">
+              <div class="error-bt" *ngIf="f.num_chm.errors?.pattern">Enter valid number</div>
+            </div>
+          </div>
+      </div>
+      </tc-form-group>
+
+      <!-- <tc-form-group>
+        <div class="row">
+          <div class="label-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <label> Allowed number of Carehome managers</label>
+          </div>
+          <div class="input-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+           <tc-input [placeholder]="'Allowed number of Carers'" formControlName="num_carers"></tc-input>
+            <div *ngIf="submitted && f.num_carers.errors">
+              <div class="error-bt" *ngIf="f.num_carers.errors?.pattern">Enter valid number</div>
+            </div>
+          </div>
+      </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <div class="row">
+          <div class="label-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <label> Allowed number of Carehome managers</label>
+          </div>
+          <div class="input-box col-lg-6 col-sm-12 col-xs-12 col-md-6">
+            <tc-input [placeholder]="'Allowed number of Patients'" formControlName="num_patients"></tc-input>
+            <div *ngIf="submitted && f.num_patients.errors">
+              <div class="error-bt" *ngIf="f.num_patients.errors?.pattern">Enter valid number</div>
+            </div>
+          </div>
+      </div>
+      </tc-form-group> -->
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [placeholder]="'Email'" formControlName="email"></tc-input>
+        <div *ngIf="submitted && f.email.errors">
+          <div class="error-bt" *ngIf="f.email.errors?.required">Email is required</div>
+          <div class="error-bt" *ngIf="f.email.errors?.pattern">Enter valid email address</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [type]="'password'" [placeholder]="'Password'" formControlName="password"></tc-input>
+        <div *ngIf="submitted && f.password.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.password.errors?.required">Password is required</div>
+          <div class="error-bt" *ngIf="f.password.errors?.pattern">Password must contain at least eight characters,
+            including uppercase, lowercase letters, Special characters and numbers. </div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [type]="'password'" [placeholder]="'Confirm Password'" formControlName="cpassword"></tc-input>
+        <div *ngIf="submitted && f.cpassword.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.cpassword.errors?.required">Confirm Password is required</div>
+          <div class="error-bt" *ngIf="f.cpassword.errors.confirmedValidator">Password and Confirm Password must be
+            match</div>
+        </div>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="addCHM_Group(chmGroupForm.value)">
+        {{isEdit ? 'Edit Care Home manager group' : 'Add Care Home manager group'}}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

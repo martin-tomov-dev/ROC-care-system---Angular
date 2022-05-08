@@ -1,0 +1,46 @@
+<div class="col-12 col-md-8">
+  <form novalidate class="new-patient-form" [formGroup]="rolesForm" (submit)="saveButton()">
+    <tc-form-group>
+      <tc-form-label>Select User Role</tc-form-label>
+      <tc-select [placeholder]="'Select Role'" (valueSelected)="onUserRoleSelect($event)" [options]="rolesData">
+      </tc-select>
+    </tc-form-group>
+    <div class="page-content">
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <tc-form-label>Module name</tc-form-label>
+        </div>
+        <div class="col-12 col-md-2">
+          <tc-form-label>Create</tc-form-label>
+        </div>
+        <div class="col-12 col-md-2">
+          <tc-form-label>View</tc-form-label>
+        </div>
+        <div class="col-12 col-md-2">
+          <tc-form-label>Edit</tc-form-label>
+        </div>
+        <div class="col-12 col-md-2">
+          <tc-form-label>Delete</tc-form-label>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let md of modulesAry;let i=index;">
+        <div class="col-12 col-md-4">
+          <tc-form-label>{{md.name}}</tc-form-label>
+        </div>
+        <div class="col-12 col-md-2" *ngFor="let data of actionAry; let j=index">
+          <input type="checkbox" [value]="data.name" (change)="onCheckboxChange($event,md.name)"
+            [checked]="md.data.indexOf(data.name) > -1 ? true : null">
+          <!-- {{data.name}} -->
+          <!-- <input type="checkbox" [value]="data" id="{{i}}{{j}}"
+        (change)="onCheckboxChange($event,md)" /> -->
+        </div>
+      </div>
+    </div>
+
+    <button tc-button type="submit" [view]="'success'" [disabled]="!enable" [block]="true">
+      Save
+    </button>
+  </form>
+</div>

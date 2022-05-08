@@ -1,0 +1,187 @@
+<div class="col-12 col-md-12" *ngIf="settingdata">
+  <form [formGroup]="settingForm" novalidate class="new-patient-form row">
+    <div class="col-md-6">
+      <tc-form-group>
+        <tc-form-label>Living wage value</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter living wage value'" formControlName="living_wage">
+          </tc-input>
+          <div *ngIf="submitted1 && f.living_wage.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.living_wage.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.living_wage.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Value for Green</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter value for green'" formControlName="greenVal">
+          </tc-input>
+          <div *ngIf="submitted1 && f.greenVal.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.greenVal.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.greenVal.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Value for Orange</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter value for orange'" formControlName="orangeVal">
+          </tc-input>
+          <div *ngIf="submitted1 && f.orangeVal.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.orangeVal.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.orangeVal.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Value for Red</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter value for Red'" formControlName="redVal">
+          </tc-input>
+          <div *ngIf="submitted1 && f.redVal.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.redVal.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.redVal.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+    </div>
+    <div class="col-md-6">
+      <tc-form-label class="carehome-manager-label">
+        Carehome manager group permission
+      </tc-form-label>
+
+      <tc-form-group>
+        <tc-form-label>Allowed number of Hospitals</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter number of hospital value'" formControlName="num_hospital">
+          </tc-input>
+          <div *ngIf="submitted1 && f.num_hospital.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.num_hospital.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.num_hospital.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Allowed number of Carehome manager</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter number of Carehome manager value'" formControlName="num_chm">
+          </tc-input>
+          <div *ngIf="submitted1 && f.num_chm.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.num_chm.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.num_chm.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Allowed number of Carers</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter number of Carers value'" formControlName="num_carer">
+          </tc-input>
+          <div *ngIf="submitted1 && f.num_carer.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.num_carer.errors?.required">This is required</div>
+            <div class="error-bt" *ngIf="f.num_carer.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Allowed number of Patients</tc-form-label>
+        <tc-form-group>
+          <tc-input [placeholder]="'Enter number of Patients value'" formControlName="num_patients" maxlength="4">
+          </tc-input>
+          <div *ngIf="submitted1 && f.num_patients.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.num_patients.errors.required">This is required</div>
+            <div class="error-bt" *ngIf="f.num_patients.errors?.pattern">Enter valid number</div>
+          </div>
+        </tc-form-group>
+      </tc-form-group>
+    </div>
+
+    <br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-12">
+
+      <div class="col-md-6">
+        <tc-form-label class="carehome-manager-label">
+          Hydration Values Configuration
+        </tc-form-label>
+
+        <tc-form-group>
+          <tc-form-label>Full cup</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'Full cup value'" formControlName="full">
+            </tc-input>
+            <div *ngIf="submitted1 && f.full.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.full.errors?.required">This is required</div>
+              <div class="error-bt" *ngIf="f.full.errors?.pattern">Enter valid number</div>
+            </div>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>1/2 cup</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'Half cup value'" formControlName="half">
+            </tc-input>
+            <div *ngIf="submitted1 && f.half.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.half.errors?.required">This is required</div>
+              <div class="error-bt" *ngIf="f.half.errors?.pattern">Enter valid number</div>
+            </div>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>3/4 cup</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'3/4 cup value'" formControlName="threeforth">
+            </tc-input>
+            <div *ngIf="submitted1 && f.threeforth.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.threeforth.errors?.required">This is required</div>
+              <div class="error-bt" *ngIf="f.threeforth.errors?.pattern">Enter valid number</div>
+            </div>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>1/4 cup</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'1/4 cup value'" formControlName="oneThird">
+            </tc-input>
+            <div *ngIf="submitted1 && f.oneThird.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.oneThird.errors?.required">This is required</div>
+              <div class="error-bt" *ngIf="f.oneThird.errors?.pattern">Enter valid number</div>
+            </div>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>Few sips</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'Few sips'" formControlName="few_sips">
+            </tc-input>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>None</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'None'" formControlName="none">
+            </tc-input>
+          </tc-form-group>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label>Total bar value</tc-form-label>
+          <tc-form-group>
+            <tc-input [placeholder]="'Total bar value'" formControlName="totalBar">
+            </tc-input>
+          </tc-form-group>
+        </tc-form-group>
+      </div>
+    </div>
+
+    <button tc-button [view]="'success'" (click)="saveButton(settingForm.value)" [block]="true">
+      Save
+    </button>
+  </form>
+</div>

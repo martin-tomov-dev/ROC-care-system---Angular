@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col col-12 col-md-12 mb-4 max-width-drink">
+        <form [formGroup]="assessmentForm" novalidate class="new-patient-form">
+            <div class="patience-box">
+                <div *ngIf="singlePat" class="patname-left-box">
+                    <span class="patName">{{singlePat.fname}} {{singlePat.lname}}</span>
+                </div>
+                <div class="right-info-box">
+                    <span>
+                        <tc-icon [iconClass]="'icofont icofont-info-circle'" [tcFontSize]="22">
+                        </tc-icon>
+                    </span>
+                    <div class="infostatus-box" *ngIf="singlePat"
+                        [ngStyle]="{'background': singlePat['drink'] ? singlePat['drink'] :'#444444'} ">
+                    </div>
+
+                </div>
+            </div>
+            <div class="someClass">
+                <h6>Type of drink:</h6>
+                <div class="inline-blocks">
+                    <div class="checkbox">
+                        <tc-radio class="custom-lable" (change)="typeOfDrink($event)" [direction]="'vertical'">
+                            <tc-radio-option
+                                *ngFor="let cbk of ['Hot drink', 'Hot milky drink', 'Cold milky drink', 'Fruit juice', 'Water / squash', 'None']"
+                                [value]="cbk">{{cbk}}
+                            </tc-radio-option>
+                        </tc-radio>
+
+                        <!-- <tc-form-label class="custom-lable">
+                            <tc-radio [value]="cbk" (change)="typeOfDrink(cbk)">{{cbk}}
+                            </tc-radio>
+                        </tc-form-label> -->
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-6" *ngIf="f.selAssessment.value == 'ROC to Drink'">
+                <tc-form-label class="custom-lable" *ngFor="let dt of drinkTypeData; let i = index">
+                  <tc-checkbox formControlName="{{dt.value}}"></tc-checkbox>&nbsp;
+                  {{dt.title}}
+                </tc-form-label>
+              </div> -->
+
+
+            </div>
+            <div>
+                <tc-form-group>
+                    <tc-form-label class="custom-title">{{f.selAssessment.value}}</tc-form-label>
+                </tc-form-group>
+                <tc-form-group>
+                    <tc-form-group>
+                        <div class="row">
+
+                            <div class="col-md-6" *ngIf="f.selAssessment.value == 'ROC to Drink'">
+                                <tc-form-label class="custom-lable" *ngFor="let dt of drinkTypeData; let i = index">
+                                    <tc-checkbox formControlName="{{dt.value}}"></tc-checkbox>&nbsp;
+                                    {{dt.title}}
+                                </tc-form-label>
+                            </div>
+
+                            <div class="col-md-6" formArrayName="rooms">
+                                <div *ngFor="let room of assessmentForm.get('rooms')['controls']; let i = index;"
+                                    [formGroup]="room">
+                                    <tc-form-label class="custom-title">
+                                        {{assessmentForm.get('roomNo')['controls'][i].value.roomName}}
+                                    </tc-form-label>
+                                    <div class="custom-radio" *ngFor="let bed of bedsArray;let j = index;">
+                                        <p class="{{bed.class}}">
+                                            <input formControlName="bedsCount" id="{{i}}{{j}}" type="radio"
+                                                [value]="bed.value">
+                                            <label for="{{i}}{{j}}"></label>
+                                        </p>
+                                    </div>
+                                    <span style="position: absolute;cursor: pointer;">
+                                        <tc-icon [iconClass]="'icofont icofont-info-circle'" [tcFontSize]="22"
+                                            (click)="onInfoClick('ROC to Drink',assessmentForm.get('roomNo')['controls'][i].value.roomName)">
+                                        </tc-icon>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </tc-form-group>
+                </tc-form-group>
+
+                <div>
+                    <h6>Approx value consumed:</h6>
+                    <!-- *ngFor="let btn of ['Full Cup', '3/4 Cup', '1/2 Cup', '1/4 Cup', 'Few Sips', 'None']"> -->
+                    <div style="display: inline;" *ngFor="let btn of intakeData">
+                        <button style="border: 2px solid;" type="button" class="btn btn-dark"
+                            (click)="volConsumed(btn.value)"
+                            [disabled]="intake_volume == btn.value">{{btn.name}}</button>&nbsp;
+                    </div>
+                </div>
+                <div>
+                    <h6>Carers Feedback:</h6>
+                    <div style="display: inline;" *ngFor="let cf of ['A', 'B', 'C']">
+                        <button style="color: #fff;background-color:  #6c757d;" (click)="carerFeed(cf)" type="button"
+                            class="btn btn-secondary" [disabled]="carers_feedback == cf">
+                            {{cf}}</button>&nbsp;
+                    </div>
+                    <div *ngIf="messageError" class="uk-form-danger">
+                        <div class="error-bt">Please select the Feedback</div>
+                      </div>
+                    <h6>Carers Feedback Notes:</h6>
+                    <tc-form-group>
+                        <tc-textarea formControlName="notes"   [placeholder]="'Carers Feedback Notes '" ></tc-textarea>
+                        <div *ngIf="submitted1 && f.notes.errors" class="uk-form-danger">
+                          <div class="error-bt" *ngIf="f.notes.errors?.required">Carers Feedback Notes is required</div>
+                        </div>
+                      </tc-form-group>
+
+                </div>
+                &nbsp;&nbsp;
+                <div class="error-bt" *ngIf="submitted1 && !isValid">
+                    All fields are required
+                </div>
+                &nbsp;&nbsp;
+                <!-- <button tc-button [view]="'success'" (click)="finalClick();" [block]="true" [disabled]="clicked"> -->
+                   <button tc-button [view]="'success'" (click)="finalClick();" [block]="true">
+                    Save Data
+                </button>
+                <button tc-button [view]="'default'" (click)="BackButton()" [block]="true">
+                    Back
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- <ng-container>
+    <ng-template #modalDelete>
+      <div class="actions justify-content-between">
+        <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+        <button tc-button [view]="'info'" (click)="saveData()">
+          Okay
+        </button>
+      </div>
+    </ng-template>
+  </ng-container>-->
+
+<ng-container>
+    <ng-template #modalTooltip>
+        <div class="custom-tooltip" style="background-color: green;" *ngIf="ttGreen">{{ttGreen}}</div>
+        <div class="custom-tooltip" style="background-color: #ff7030;" *ngIf="ttOrange">{{ttOrange}}</div>
+        <div class="custom-tooltip" style="background-color: red;" *ngIf="ttRed">{{ttRed}}</div>
+    </ng-template>
+</ng-container>

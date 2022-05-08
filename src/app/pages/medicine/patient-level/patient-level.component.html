@@ -1,0 +1,115 @@
+<tc-card class="mb-0">
+  <div class="col col-12 col-md-12 col-xl-4">
+    <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
+      <div class="row align-items-center">
+        <div class="col col-3">
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-glass'" [padding]="0">
+          </tc-icon>
+        </div>
+
+        <div class="col col-9">
+          <h5 class="mt-0 mb-1 page-title">{{'Patient Level' | translate}} - {{patient_level.length}}</h5>
+        </div>
+      </div>
+    </tc-card>
+  </div>
+  <tc-table [rows]="patient_level" [hovered]="true" [pagination]="true" [search]="true" [headerBgColor]="'#336cfb'"
+    [headerColor]="'#fff'">
+
+    <tc-table-col [columnTitle]="'Title of assessment'" [columnName]="'title'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Number of assessment'" [columnName]="'no_assessment'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'ass_time'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }} hr</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Default Level'" [columnName]="'is_default'">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <tc-switcher [disabled]="value == true" [value]="value" (valueChanged)="onSwitch($event, row.id)"></tc-switcher>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont-ui-edit'" [view]="'info'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="edit(row)"></button>
+
+          <button tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="remove(row)"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+</tc-card>
+
+<div class="add-action-box">
+  <button tc-button [afterIcon]="'icofont-location-pin'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Patient Level data', modalFooter)"></button>
+</div>
+<!-- Modal delete -->
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="deleteOk()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="patientLevelForm" novalidate>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Title for Patient level'" formControlName="title"></tc-input>
+        <div *ngIf="submitted && f.title.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.title.errors?.required">Title is required</div>
+          <div class="error-bt" *ngIf="f.title.errors?.pattern">Enter valid title</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Number of assessment level'" formControlName="no_assessment"></tc-input>
+        <div *ngIf="submitted && f.no_assessment.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.no_assessment.errors?.required">Number of assessment is required</div>
+          <div class="error-bt" *ngIf="f.no_assessment.errors?.pattern">Enter valid assessment number between 1 to 10
+          </div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Assessment priority time duration'" formControlName="ass_time"></tc-input>
+        <div *ngIf="submitted && f.ass_time.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.ass_time.errors?.required">Assessment hour is required</div>
+          <div class="error-bt" *ngIf="f.ass_time.errors?.pattern">Enter valid assessment time duration hour</div>
+        </div>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="addPatientLevel(patientLevelForm.value)">
+        {{isEdit ? 'Edit Record' : 'Add Record'}}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

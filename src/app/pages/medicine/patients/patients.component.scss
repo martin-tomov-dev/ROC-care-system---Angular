@@ -1,0 +1,92 @@
+@import '~src/assets/sass/variables';
+
+:host {
+  .address-col {
+    min-width: 130px;
+  }
+  .add-action-box {
+    bottom: $module-rem * 8;
+    position: fixed;
+    right: $module-rem * 2;
+    z-index: 9997;
+
+    .tc-btn {
+      font-size: 30px;
+    }
+  }
+  .actions {
+    display: flex;
+    margin: -$module-rem / 4;
+
+    .tc-btn {
+      margin: $module-rem / 4;
+    }
+  }
+}
+
+.error-bt {
+  color: #ff0000;
+  display: block;
+  margin: 5px 0 0 22px;
+  font-size: 13px;
+}
+.page-title{
+  color: rgba(31, 32, 34, 0.5);
+    font-size: 2rem;
+    margin: 0 0 1.42857143rem;
+}
+
+
+::ng-deep .cdk-overlay-container {
+  z-index: 9998 !important;
+}
+
+.progress {
+  display: flex;
+  height: 2rem;
+  overflow: hidden;
+  line-height: 0;
+  font-size: .75rem;
+  background-color: #e9ecef;
+  border-radius: .25rem;
+  position: relative;
+  width: 60%;;
+}
+
+.progress-bar {
+  position: absolute !important;
+  height: 100% !important;
+}
+.progressText {
+  margin: 14px 28px 0 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  @media #{$max767} {
+    letter-spacing: 1.8px;
+    line-height: 2.5;
+    margin: 0;
+  }
+}
+
+.maincls{
+  display: flex;
+  align-items: center;
+  @media #{$max767} {
+    width: 130px;
+  }
+}
+.innercls{
+  font-size: 3mm;
+  padding-left: 5px;
+  width: 40%;
+}
+
+tc-card{
+  &.mobile-hide{
+    @media #{$max767} {
+      display: none;
+    }
+  }
+}
+

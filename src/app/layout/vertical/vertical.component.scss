@@ -1,0 +1,64 @@
+@import '~src/assets/sass/variables';
+
+:host {
+  .app-container {
+    padding-left: $vertical-navbar-width;
+    @media #{$max991} {
+      padding-left: 0;
+    }
+
+    ::ng-deep {
+      .navbar.horizontal {
+        z-index: 9997;
+
+        navbar-skeleton {
+          .sk-logo {
+            display: none !important;
+          }
+        }
+        .logo-horizontal-bar {
+          .logo-wrap {
+            padding: 12px 0px;
+            margin-left: 50px;
+            @media #{$max360} {
+              margin-left: 10px;
+            }
+        
+          }
+        }
+
+      }
+    }
+    .footer {
+      left: $vertical-navbar-width;
+      @media #{$max991} {
+        left: 0;
+      }
+    }
+    .hospital-name.mobile-custom-hospital{
+      display: none;
+      @media #{$max767} {
+        display: block;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
+    }
+    .hospital-name{
+      @media #{$max767} {
+        display: none;
+      }
+    }
+    &.scrolled {
+      ::ng-deep {
+        .navbar.horizontal {
+          box-shadow: 0 2px 5px rgba(#000,.05);
+        }
+      }
+    }
+  }
+  .hospital-name{
+    color: rgb(51, 108, 251);
+  }
+}
+

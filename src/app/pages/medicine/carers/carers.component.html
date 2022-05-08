@@ -1,0 +1,192 @@
+<tc-card class="mb-0">
+  <div class="col col-12 col-md-12 col-xl-4">
+    <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
+      <div class="row align-items-center">
+        <div class="col col-3">
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-nurse'" [padding]="0">
+          </tc-icon>
+        </div>
+
+        <div class="col col-9">
+          <h5 class="mt-0 mb-1 page-title">{{'Carers/Nurse' | translate}} - {{carers.length}}</h5>
+        </div>
+      </div>
+    </tc-card>
+  </div>
+  <tc-table [rows]="carers" [hovered]="true" [search]="true" [pagination]="true" [headerBgColor]="'#336cfb'"
+    [headerColor]="'#fff'">
+
+    <tc-table-col [columnTitle]="'First name'" [columnName]="'fname'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Last name'" [columnName]="'lname'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Email'" [columnName]="'email'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="d-flex align-items-center nowrap" [tcColor]="'#336cfb'">
+          {{ value }}
+        </span>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Hospital'" [columnName]="'hospitalname'">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">
+          {{ value }}
+        </strong>
+      </ng-template>
+    </tc-table-col>
+
+
+    <tc-table-col [columnTitle]="'Created By'" [columnName]="'created_byTm'">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{value}}</strong>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Status'" [columnName]="'cstatus'">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <tc-switcher [value]="value" (valueChanged)="onSwitch(row)"></tc-switcher>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col *ngIf="currentRole != 'nurse'" [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont-ui-edit'" [view]="'info'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="edit(row)"></button>
+
+          <button tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="remove(row)"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+</tc-card>
+<!-- <p>{{carers.length }} {{carehomeData.length > 0 && +carehomeData[0]['num_carers']}} {{+adminCarersHospital}}</p>
+<p>{{carers.length < ((carehomeData.length > 0) && +carehomeData[0]['num_carers']) || +adminCarersHospital}}</p> -->
+
+<div class="add-action-box bello" *ngIf="(currentRole == 'chm-group') && (carers.length < (+carehomeDataObj?.num_carers || adminCarersHospital))">
+  <button tc-button [afterIcon]="'icofont-nurse'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Carer/Nurse', modalFooter)"></button>
+</div>
+<div class="add-action-box bello" *ngIf="(currentRole == 'super-admin' || currentRole == 'roc-admin')">
+  <button tc-button [afterIcon]="'icofont-nurse'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Carer/Nurse', modalFooter)"></button>
+</div>
+<!-- Modal delete -->
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="deleteOk()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="carersForm" novalidate>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'First Name'" formControlName="fname"></tc-input>
+        <div *ngIf="submitted && f.fname.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.fname.errors?.required">First name is required</div>
+          <div class="error-bt" *ngIf="f.fname.errors?.pattern">Enter valid first name</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Last Name'" formControlName="lname"></tc-input>
+        <div *ngIf="submitted && f.lname.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.lname.errors?.required">Last name is required</div>
+          <div class="error-bt" *ngIf="f.lname.errors?.pattern">Enter valid last name</div>
+        </div>
+      </tc-form-group>
+
+      <!-- <tc-form-group *ngIf="!isEdit">
+        <tc-select [placeholder]="'Select Roles'" formControlName="roles" [options]="roles"></tc-select>
+        <div *ngIf="submitted && f.roles.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.roles.errors?.required">Role is required</div>
+        </div>
+      </tc-form-group> -->
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [placeholder]="'Email'" formControlName="email"></tc-input>
+        <div *ngIf="submitted && f.email.errors">
+          <div class="error-bt" *ngIf="f.email.errors?.required">Email is required</div>
+          <div class="error-bt" *ngIf="f.email.errors?.pattern">Enter valid email address</div>
+        </div>
+      </tc-form-group>
+
+      <div>
+        <tc-form-group *ngIf="currentRole == 'super-admin' || currentRole == 'roc-admin' || 
+          currentRole == 'chm-group'">
+          <tc-select (valueSelected)="onHospitalSelect($event)" [placeholder]="'Select Hospital'"
+            formControlName="hospital" [options]="hospitalData">
+          </tc-select>
+          <div *ngIf="submitted && f.hospital.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.hospital.errors?.required">Select any one</div>
+          </div>
+        </tc-form-group>
+      </div>
+
+      <div *ngIf="!isEdit">
+        <tc-form-group *ngIf="currentRole == 'super-admin' || currentRole == 'roc-admin'">
+          <tc-select [placeholder]="'Select Care Home'" formControlName="care_home" [options]="carehomeData">
+          </tc-select>
+          <!-- <div *ngIf="submitted && f.care_home.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.care_home.errors?.required">Select any one</div>
+          </div> -->
+        </tc-form-group>
+      </div>
+
+      <!-- <tc-form-group>
+        <tc-input [placeholder]="'Cost Per Hour'" formControlName="cost"></tc-input>
+        <div *ngIf="submitted && f.cost.errors">
+          <div class="error-bt" *ngIf="f.cost.errors?.required">Cost is required</div>
+          <div class="error-bt" *ngIf="f.cost.errors?.pattern">Enter valid cost amount</div>
+        </div>
+      </tc-form-group> -->
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [type]="'password'" [placeholder]="'Password'" formControlName="password"></tc-input>
+        <div *ngIf="submitted && f.password.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.password.errors?.required">Password is required</div>
+          <div class="error-bt" *ngIf="f.password.errors?.pattern">Password must contain at least eight characters,
+            including uppercase, lowercase letters, Special characters and numbers</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-input [type]="'password'" [placeholder]="'Confirm Password'" formControlName="cpassword"></tc-input>
+        <div *ngIf="submitted && f.cpassword.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.cpassword.errors?.required">Confirm Password is required</div>
+          <div class="error-bt" *ngIf="f.cpassword.errors.confirmedValidator">Password and Confirm Password must be
+            match</div>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group *ngIf="!isEdit">
+        <tc-switcher [value]="true" formControlName="cstatus">Status</tc-switcher>
+      </tc-form-group>
+      
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="addCarer(carersForm.value)">
+        {{isEdit ? 'Edit Carer' : 'Add Carer'}}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

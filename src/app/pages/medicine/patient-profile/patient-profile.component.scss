@@ -1,0 +1,14 @@
+::ng-deep .cdk-overlay-container {
+    z-index: 9998 !important;
+  }
+
+  .custom-capital{
+    text-transform: capitalize;
+  }
+
+  .custom-log{
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: #828181;
+  }

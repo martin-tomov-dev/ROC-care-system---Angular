@@ -1,0 +1,38 @@
+<form [formGroup]="loginForm" novalidate>
+  <tc-form-group>
+    <tc-input [placeholder]="'Email'" formControlName="login"></tc-input>
+    <div *ngIf="submitted && f.login.errors">
+      <div class="error-bt" *ngIf="f.login.errors?.required">Email is required</div>
+    </div>
+  </tc-form-group>
+
+  <tc-form-group>
+    <tc-input [placeholder]="'Password'" [type]="'password'" formControlName="pass"></tc-input>
+    <div *ngIf="submitted && f.pass.errors">
+      <div class="error-bt" *ngIf="f.pass.errors?.required">Password is required</div>
+    </div>
+  </tc-form-group>
+
+  <tc-form-group>
+    <tc-switcher formControlName="remember_me" [value]="false">Remember me</tc-switcher>
+  </tc-form-group>
+
+  <div class="actions row">
+    <div class="col-auto">
+      <button (click)="userLogin(loginForm.value)" tc-button [view]="'accent'" [beforeIcon]="'icofont-login'" [disabled]="clicked">
+        Login
+      </button>
+    </div>
+    <div class="col-auto" id="mainLoginLoading" style="display: none;">
+      <span class="login-loader"><i class="icofont-spinner-alt-4 rotate"></i></span>
+    </div>
+  </div>
+</form>
+
+  
+  
+
+<p class="mt-5 mb-1"><a [routerLink]="['/forgot-password']">Forgot password?</a></p>
+
+
+<!-- dhruvika.kukadiya@iflair.com 123456 -->

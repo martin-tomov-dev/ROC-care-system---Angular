@@ -1,0 +1,194 @@
+<div class="row">
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" *ngIf="userRole == 'roc-admin' || userRole == 'super-admin'" style="cursor: pointer;">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s" [routerLink]="['/roc_admin']">
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-user-suited'" [padding]="0"></tc-icon>
+                </div>
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 label-title">{{'ROC Admin' | translate}}</h6>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'">{{rocdata.length}}</div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" *ngIf="userRole == 'roc-admin' || userRole == 'super-admin'" style="cursor: pointer;">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-02s" [routerLink]="['/hospitals']">
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-building-alt'" [padding]="0"></tc-icon>
+                </div>
+
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 nowrap label-title">{{'Hospitals'|translate}}</h6>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'">{{CHdata.length}}</div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" *ngIf="userRole == 'roc-admin' || userRole == 'super-admin' || userRole == 'carehome-manager'" style="cursor: pointer;">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-03s" [routerLink]="['/carers']">
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-nurse'" [padding]="0">
+                    </tc-icon>
+                </div>
+
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 label-title">{{'Carers' || translate}}</h6> 
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'">{{carers.length}}</div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" style="cursor: pointer;">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-04s" [routerLink]="['/patients']">
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-people'" [padding]="0">
+                    </tc-icon>
+                </div>
+
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 nowrap label-title">{{'Patients' | translate}}</h6>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'" *ngIf="userRole=='roc-admin' || userRole=='chm-group' || userRole=='super-admin' || (userRole=='carehome-manager' && !patientdatalength)">{{patientdata.length}}</div>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'" *ngIf="userRole!='roc-admin'">{{patientdatalength}}</div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" *ngIf="userRole == 'nurse' || userRole == 'carehome-manager'">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-prescription'" [padding]="0"></tc-icon>
+                </div>
+
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 label-title">{{'Due Assessments' | translate}}</h6>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'">
+                        {{rocService.dueAssessmentCount ? rocService.dueAssessmentCount : 0}}</div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-3 two-column-m" 
+        *ngIf="(userRole == 'carehome-manager-group') || (userRole == 'carehome-manager')" style="cursor: pointer;">
+        <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-04s" [routerLink]="['/actions']" routerLinkActive="router-link-active" >
+            <div class="row align-items-center">
+                <div class="col col-5 two-column-inner-m">
+                    <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [iconClass]="'icofont-people'" [padding]="0">
+                    </tc-icon>
+                </div>
+
+                <div class="col col-7 two-column-inner-m">
+                    <h6 class="mt-0 mb-1 label-title">{{'Concerned' | translate}}</h6>
+                    <div class="count" [tcFontSize]="20" [tcColor]="'#336cfb'">
+                        {{acknoledgementDoc.length}}  </div>
+                </div>
+            </div>
+        </tc-card>
+    </div>
+</div>
+
+
+<!-- <tc-card [title]="'Hospital survey'" *ngIf="userRole == 'carehome-manager'">
+  <div echarts [options]="hsOptions" class="chat-container container-h-400"></div>
+</tc-card> -->
+
+<div class="row">
+
+    <div class="col col-12 col-md-4 mobile-order-1">
+        <!-- <tc-card title="ROC to Drink 11 - {{drink_number}}"> -->
+            <span class="roctodrikclass"> ROC to Drink - {{ drink_number }} </span>
+            <canvas baseChart [data]="roc_drink" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [colors]="doughnutChartColors" [options]="doughnutChartOptions" [legend]="doughnutChartLegend"></canvas>
+        <!-- </tc-card> -->
+        
+    </div>
+   
+
+    <div class="col col-12 col-md-4 mobile-order-3">
+        <div class="desktop-hide" *ngIf="areaRocDrink.length>0 && (showMovingAvg===1)">
+            <!-- <tc-card [title]="'7 Day Moving Average (ROC to Drink)'"> -->
+                <span class="roctodrikclass"> 7 Day Moving Average (ROC to Drink) </span>
+                <div echarts [options]="areaOptions0" class="chat-container container-h-400"></div>
+            <!-- </tc-card> -->
+        </div>
+        <!-- <tc-card title="ROC to Eat - {{eat_number}}"> -->
+        <span class="roctodrikclass"> ROC to Eat - {{ eat_number }} </span>
+            <canvas baseChart [data]="roc_eat" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [colors]="doughnutChartColors" [options]="doughnutChartOptions" [legend]="doughnutChartLegend"></canvas>
+        <!-- </tc-card> -->
+        
+    </div>
+
+    
+
+
+    <div class="col col-12 col-md-4 mobile-order-5">
+        <!-- <tc-card title="ROC to Holistic - {{holistic_number}}"> -->
+        <span class="roctodrikclass"> ROC to Holistic - {{ holistic_number }} </span>
+            <canvas baseChart [data]="roc_holistic" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" [colors]="doughnutChartColors" [options]="doughnutChartOptions" [legend]="doughnutChartLegend"></canvas>
+            <!-- <div echarts [options]="paOptions" class="chat-container container-h-300"></div> -->
+        <!-- </tc-card> -->
+    </div>
+
+    
+
+
+    <!-- roc_drink -->
+    <div class="col col-12 col-md-4 mobile-order-2">
+        <tc-card> 
+            <canvas baseChart [datasets]="barChartDataDrink" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+        </tc-card>
+    </div>
+    <!-- roc_eat -->
+    <div class="col col-12 col-md-4 mobile-order-4">
+        <tc-card>
+            <canvas baseChart [datasets]="barChartDataEat" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+        </tc-card>
+        <div class="col col-12 col-md-4 desktop-hide" *ngIf="areaRocDrink.length>0 && (showMovingAvg===1)">
+            <!-- <tc-card [title]="'7 Day Moving Average (ROC to Eat)'"> -->
+                <span class="roctodrikclass"> 7 Day Moving Average (ROC to Eat) </span>
+                <div echarts [options]="areaOptions1" class="chat-container container-h-400"></div>
+            <!-- </tc-card> -->
+        </div>
+    </div>
+
+    <!-- roc to holistic -->
+    <div class="col col-12 col-md-4 mobile-order-6">
+        <tc-card>
+            <canvas baseChart [datasets]="barChartDataHolistic" [labels]="barChartLabelsHolistic" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+        </tc-card>
+        <div class="col col-12 col-md-4 desktop-hide" *ngIf="areaRocDrink.length>0 && (showMovingAvg===1)">
+            <!-- <tc-card [title]="'7 Day Moving Average (ROC to Holistic)'"> -->
+                <span class="roctodrikclass"> 7 Day Moving Average (ROC to Holistic) </span>
+                <div echarts [options]="areaOptions2" class="chat-container container-h-400"></div>
+            <!-- </tc-card> -->
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row" *ngIf="areaRocDrink.length>0 && (showMovingAvg===1)">
+
+    <div class="col col-12 col-md-4 mobile-hide">
+        <span class="roctodrikclass"> 7 Day Moving Average (ROC to Drink) </span>
+        <div echarts [options]="areaOptions0" class="chat-container container-h-400"></div>
+    </div>
+
+    <div class="col col-12 col-md-4 mobile-hide">
+        <span class="roctodrikclass"> 7 Day Moving Average (ROC to Eat) </span>
+        <div echarts [options]="areaOptions1" class="chat-container container-h-400"></div>
+    </div>
+
+    <div class="col col-12 col-md-4 mobile-hide">
+        <span class="roctodrikclass"> 7 Day Moving Average (ROC to Holistic) </span>
+        <div echarts [options]="areaOptions2" class="chat-container container-h-400"></div>
+    </div>
+</div>
+

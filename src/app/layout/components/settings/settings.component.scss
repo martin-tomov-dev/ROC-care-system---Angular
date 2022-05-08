@@ -1,0 +1,42 @@
+.error-bt {
+    color: #ff0000;
+    display: block;
+    margin: 5px 0 0 22px;
+    font-size: 13px;
+  }
+
+.carehome-manager-label{
+	position: absolute;
+    top: -54px;
+    color: rgba(31, 32, 34, 0.5);
+    font-size: 2rem;
+    margin: 0 0 1.42857143rem;
+    
+}
+@media (max-width: 767px) {
+    .carehome-manager-label{
+        position: static;
+    }
+}
+
+.custom-capital{
+    text-transform: capitalize;
+  }
+  
+  .page-title{
+    color: rgba(31, 32, 34, 0.5);
+      font-size: 2rem;
+      margin: 0 0 1.42857143rem;
+  }
+  .label-box {
+    align-items: flex-end;
+    align-content: center;
+    display: flex;
+    padding-left: 20px;
+  }
+  .error-bt {
+    color: #ff0000;
+    display: block;
+    margin: 5px 0 0 22px;
+    font-size: 13px;
+  }

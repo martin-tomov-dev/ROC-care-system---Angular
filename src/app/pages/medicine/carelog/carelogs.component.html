@@ -1,0 +1,121 @@
+<form class="mobile-hide" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" *ngIf="currentRole != 'nurse'">
+    <div class="row">
+        <div class="col col-12 col-md-4 mb-4">
+            <tc-form-group>
+                <tc-form-label>From Date</tc-form-label>
+                <nz-date-picker class="custom-picker" nzFormat="dd-MM-yyyy" nzPlaceHolder="Select Start Date" [nzDisabledDate]="disabledDate" formControlName="fromDate">
+                </nz-date-picker>
+            </tc-form-group>
+            <div *ngIf="dateErrroMessage" class="uk-form-danger">
+                <div class="error-bt">Please select the From Date</div>
+            </div>
+
+        </div>
+        <div class="col col-12 col-md-4 mb-4">
+            <tc-form-group>
+                <tc-form-label>To Date</tc-form-label>
+                <nz-date-picker class="custom-picker" formControlName="toDate" nzFormat="dd-MM-yyyy" nzPlaceHolder="Select End Date" [nzDisabledDate]="disabledDate">
+                </nz-date-picker>
+            </tc-form-group>
+        </div>
+
+        <div class="col col-12 col-md-4 mb-4">
+            <button style="margin-top: 6%;" tc-button [view]="'success'" [block]="true" class="button" type="submit">Submit</button>
+        </div>
+    </div>
+    <div *ngIf="fromToErrroMessage" class="uk-form-danger">
+        <div class="error-bt">From date should be less than To date</div>
+    </div>
+</form>
+
+
+<div class="mobile-hide">
+    <label for="cars" *ngIf="currentRole != 'nurse'">Choose a Carer:</label>
+    <select [(ngModel)]="selectedDeviceNew" (change)="onChangeNew($event)" class="select-items" *ngIf="currentRole != 'nurse'">
+      <option value="">Select</option>
+      <option  *ngFor="let dtNew of uniqCarerData; let i = index">
+      {{ dtNew }}
+      </option>
+</select>
+</div>
+
+<tc-card class="mb-0" *ngIf="currentRole !== undefined">
+    <tc-table [rows]="test" [hovered]="true" [search]="false" [pagination]="true" [headerBgColor]="'#336cfb'" [headerColor]="'#fff'" *ngIf="rendered">
+
+        <tc-table-col [columnTitle]="'Date/Time'" [columnName]="'created_at_date_time'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <strong class="custom-capital">{{ value }}</strong>
+            </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Carer'" [columnName]="'created_by'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <strong class="custom-capital" *ngIf="value.name">{{ value.name }}</strong>
+                <strong class="custom-capital" *ngIf="!value.name">{{ value }}</strong>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Feedback'" [columnName]="'feedback'">
+            <ng-template #tableTDTemplate let-value let-row="row">
+
+                <span *ngIf="value && value.src.search('assets') != -1">
+          <tc-avatar
+            [src]="value.src"
+            style="cursor: pointer; background-color: white;  "
+            (click)="updateModal(modalBody, 'Carer Feedback', value.date)"
+          ></tc-avatar>
+          
+        </span>
+
+                <!-- <span class="no-avatar" *ngIf="value && getSpan(value)"> -->
+                <!-- <span class="no-avatar" *ngIf="value && value.search('assets') == -1">
+          N/A
+        </span> -->
+
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Remarks'" [columnName]="'remarks'" [enableSorting]="false">
+            <ng-template #tableTDTemplate let-value let-row="row">
+                <button *ngIf="value  && getSpan_ack(value)" tc-button (click)="updateModal_remarks(modalBody, 'Manager Remark', value)" [afterIcon]="'icofont-info-circle'" [ngStyle]="{ background: 'transparent',color:'#00C3DA' }" [tcShape]="500" [size]="'sm'"></button>
+                <span class="no-avatar" *ngIf="value && !getSpan_ack(value)"><br>
+          N/A
+        </span>
+            </ng-template>
+        </tc-table-col>
+    </tc-table>
+</tc-card>
+
+<ng-container>
+    
+</ng-container>
+
+<ng-container>
+    <ng-template #modalBody>
+        <span> {{ modelFeedback }} </span>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">
+        Close
+      </button>
+        </div>
+    </ng-template>
+</ng-container>

@@ -1,0 +1,52 @@
+@import 'variables';
+
+@import './fonts';
+
+@import './structure';
+@import './typography';
+@import './full-calendar';
+@import './ng-zorro-custom';
+@import './helpers';
+
+.content-box {
+    .content-header {
+      padding-top: $module-rem * 2;
+      .logo {
+        .logo-wrap {
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+
+
+@media (max-width: 767px) {
+  .two-column-m{
+    .custom-bg-color{
+      .card-content{
+        padding: 10px !important;
+      }
+    }
+    .two-column-inner-m tc-icon{
+      font-size: 30px;
+      .label-title{
+        font-size: 10px;
+      }
+    }
+
+  }
+
+}
+
+/*$_custom-wight: 600;
+$_custom-fontsize: 1.2rem;
+
+.card-header{
+    .card-title{
+      font-size: $_custom-fontsize;
+      font-weight: $_custom-wight;
+    }
+}
+*/

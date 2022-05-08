@@ -1,0 +1,176 @@
+<tabset #staticTabs>
+  <tab heading="Actions">
+    <div class="mt-3">
+      <!-- <label for="cars">Choose a Carer:</label>
+      <select [(ngModel)]="selectedDeviceNew" (change)="onChangeNew($event)" class="select-items">
+        <option value="">Select</option>
+        <option *ngFor="let carer of uniqueCarers; let i = index">
+          {{ carer.fullName }}
+        </option>
+      </select> -->
+      <tc-card class="mt-5 mb-0">
+        <tc-table [rows]="acknoledgementDoc" [hovered]="true" [search]="false" [pagination]="true" [headerBgColor]="'#336cfb'"
+          [headerColor]="'#fff'">
+
+          <tc-table-col [columnTitle]="'Date/Time'" [columnName]="'date_time'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{ value }}</strong>
+            </ng-template>
+          </tc-table-col>
+
+          <tc-table-col [columnTitle]="'Name'" [columnName]="'patient_id'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{ value.fname }} {{ value.lname }}</strong>
+              <!-- <strong class="custom-capital">{{ (value.path | populateit | async)?.fullName }}</strong> -->
+            </ng-template>
+          </tc-table-col>
+
+          <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+
+          <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+
+          <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+
+          <tc-table-col [columnTitle]="'Feedback'" [columnName]="'img'">
+            <ng-template #tableTDTemplate let-value let-row="row">
+              <span>
+                <tc-avatar [src]="value" style="cursor: pointer; background-color: white;"
+                  (click)="updateModal(modalBody, 'Carer Feedback', row.notes)"></tc-avatar>
+              </span>
+            </ng-template>
+          </tc-table-col>
+
+          <!-- <tc-table-col [columnTitle]="'Rating OverAll'" [columnName]="'rating'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{ value.score }}</strong>
+            </ng-template>
+          </tc-table-col> -->
+
+          <tc-table-col [columnTitle]="'Acknowledgement'" [columnName]="'isAcknowledged'" [enableSorting]="false">
+            <ng-template #tableTDTemplate let-value let-row="row">
+              <tc-switcher [value]="value" [id]="row.id" (valueChanged)="onSwitch(row)"></tc-switcher>
+            </ng-template>
+          </tc-table-col>
+
+        </tc-table>
+      </tc-card>
+
+      <!-- edit patient Modal window -->
+      <ng-container>
+        <ng-template #modalBody>
+          <span> {{ modelFeedback }} </span>
+        </ng-template>
+
+        <ng-template #modalFooter>
+          <div class="actions justify-content-between">
+            <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">
+              Close
+            </button>
+          </div>
+        </ng-template>
+      </ng-container>
+      <!-- end Modal window -->
+    </div>
+  </tab>
+  <tab heading="Read">
+    <tc-card class="mt-5 mb-0">
+      <tc-table [rows]="acknoledgedData" [hovered]="true" [search]="false" [pagination]="true" [headerBgColor]="'#336cfb'"
+        [headerColor]="'#fff'">
+
+        <tc-table-col [columnTitle]="'Date/Time'" [columnName]="'date_time'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{ value }}</strong>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Name'" [columnName]="'patient_id'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{ value.fname }} {{ value.lname }}</strong>
+            <!-- <strong class="custom-capital">{{ (value.path | populateit | async)?.fullName }}</strong> -->
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+              [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+              [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+              [ngStyle]="{ background: value ? value : '#444444' }" [tcShape]="500" [size]="'sm'"></button>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Feedback'" [columnName]="'img'">
+          <ng-template #tableTDTemplate let-value let-row="row">
+            <span>
+              <tc-avatar [src]="value" style="cursor: pointer; background-color: white;"
+                (click)="updateModal(modalBody, 'Carer Feedback', row.notes)"></tc-avatar>
+            </span>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Who Acknowledged'" [columnName]="'acknowledgedBy'" [enableSorting]="false">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{ (value.path | populateit | async)?.fullName }}</strong>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Remarks'" [columnName]="'remarks'" [enableSorting]="false">
+          <ng-template #tableTDTemplate let-value>
+            <button tc-button (click)="updateModal(modalBody, 'Manager Remark', value)" [afterIcon]="'icofont-info-circle'" 
+            [ngStyle]="{ background: 'transparent',color:'#00C3DA' }" [tcShape]="500" [size]="'sm'"></button>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Acknowledged At'" [columnName]="'acknowledgedAt'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{ value }}</strong>
+          </ng-template>
+        </tc-table-col>
+
+      </tc-table>
+    </tc-card>
+
+    <!-- edit patient Modal window -->
+    <ng-container>
+      <ng-template #modalBody>
+        <span> {{ modelFeedback }} </span>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+          <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">
+            Close
+          </button>
+        </div>
+      </ng-template>
+    </ng-container>
+    <!-- end Modal window -->
+  </tab>
+</tabset>

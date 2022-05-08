@@ -1,0 +1,34 @@
+<div class="col-12 col-md-8" *ngIf="settingdata">
+  <form [formGroup]="settingForm" novalidate class="new-patient-form">
+   
+    <tc-form-group>
+      <tc-form-label>Select Currency Type</tc-form-label>
+      <tc-form-group>
+        <tc-radio formControlName="currency" [direction]="'vertical'" [value]="'euro'">
+          <tc-radio-option [value]="'euro'">GBP (€)</tc-radio-option>
+          <tc-radio-option [value]="'usd'">USD ($)</tc-radio-option>
+        </tc-radio>
+      </tc-form-group>
+      <div *ngIf="submitted1 && f.currency.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.currency.errors?.required">This is required</div>
+          </div>
+    </tc-form-group>
+
+    <tc-form-group>
+      <tc-form-label>Enable 7 Days Moving Average on Dashboard?</tc-form-label>
+      <tc-form-group>
+        <tc-radio formControlName="movingavg" [direction]="'vertical'" [value]="'euro'">
+          <tc-radio-option [value]="'yes'">Yes</tc-radio-option>
+          <tc-radio-option [value]="'no'">No</tc-radio-option>
+        </tc-radio>
+      </tc-form-group>
+      <div *ngIf="submitted1 && f.movingavg.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.movingavg.errors?.required">This is required</div>
+          </div>
+    </tc-form-group>
+
+    <button tc-button [view]="'success'" (click)="saveButton(settingForm.value)" [block]="true">
+        Save
+      </button>
+  </form>
+</div>

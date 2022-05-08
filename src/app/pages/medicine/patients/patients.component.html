@@ -1,0 +1,261 @@
+<tc-card class="mb-0" *ngIf="currentRole !== undefined">
+
+  <div class="col col-12 col-md-12 col-xl-4">
+    <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s mobile-hide">
+      <div class="row align-items-center">
+        <div class="col col-3">
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-user-suited'"
+            [padding]="0"></tc-icon>
+        </div>
+
+        <div class="col col-9">
+          <h5 class="mt-0 mb-1 page-title">{{'Patients' | translate}} - {{patients.length}}</h5>
+        </div>
+      </div>
+    </tc-card>
+  </div>
+  <tc-table [rows]="patients" [hovered]="true" [pagination]="true" [search]="true" [headerBgColor]="'#336cfb'"
+    [headerColor]="'#fff'">
+
+    <tc-table-col [columnTitle]="'Profile'" [columnName]="'photo'">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <tc-avatar [src]="value ? value : 'assets/content/avatar.jpg'" style="cursor: pointer;"
+          (click)="
+          goToProfileUserFriendly(row.id)"></tc-avatar>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Name'" [columnName]="'fullName'" [enableSorting]="true"
+    *ngIf="currentRole == 'nurse' || currentRole == 'carehome-manager'">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+    
+    <tc-table-col [columnTitle]="'Fluid Intake'" [columnName]="'intake'" *ngIf="currentRole">
+      
+      <ng-template #tableTDTemplate let-value>
+       
+        <div class="maincls">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar"
+          attr.aria-valuenow="{{value ? ((value) / totalBarValue) : 0}}" aria-valuemin="0" aria-valuemax="100"
+          [ngStyle]="{'width': value ? (((value) / totalBarValue)*100 + '%') : 0}">
+          <span class="sr-only">{{value ? ((value * 100) / totalBarValue) + '%' : 0}} %</span>
+          </div>
+          <p class="progressText">
+            {{value >= totalBarValue ? 100 : ((value * 100) / totalBarValue || 0) | number: '1.0-0'}} %
+          </p>
+        </div> 
+        <span class="innercls">{{ (value)?value:'0'}} mls</span>
+      </div>
+      </ng-template>
+      
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Age'" [columnName]="'age'" [enableSorting]="true" *ngIf="currentRole == 'carehome-manager' ||
+    currentRole == 'roc-admin' || currentRole == 'super-admin'">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Hospital'" [columnName]="'hospitalname'"
+      *ngIf="currentRole == 'roc-admin' || currentRole == 'super-admin'">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="address-col">{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Created By'" [columnName]="'created_by'"
+      *ngIf="currentRole == 'roc-admin' || currentRole == 'super-admin'">
+      <ng-template #tableTDTemplate let-value>
+        <strong class="custom-capital">{{value}}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Point of Care'" [columnName]="'assessment'" *ngIf="currentRole">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont icofont-soft-drinks'" [square]="true"
+            [ngStyle]="{'background': value?.drink ? value?.drink :'#444444'} " [tcShape]="500" [size]="'sm'"
+            [disabled]="value?.drink || currentRole == 'roc-admin' || currentRole == 'super-admin'"
+            (click)="goTo(row.id, 'Drink')">Drink</button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Assessments'" [columnName]="'assessment'" *ngIf="currentRole">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont-spoon-and-fork'" [square]="true"
+            [ngStyle]="{'background': value?.eat ? value?.eat :'#444444'} "
+            [disabled]="value?.eat || currentRole == 'roc-admin' || currentRole == 'super-admin'"
+            (click)="goTo(row.id, 'Eat')" [tcShape]="500" [size]="'sm'">Eat</button>
+          <button tc-button 
+            [ngStyle]="{'background': value?.holistic ? value?.holistic :'#444444'} " [square]="true" [tcShape]="500"
+            [size]="'sm'" [disabled]="value?.holistic || currentRole == 'roc-admin' || currentRole == 'super-admin'"
+            (click)="goTo(row.id, 'Holistic')">Holistic</button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'" *ngIf="currentRole != 'nurse'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+
+          <button tc-button [afterIcon]="'icofont-ui-edit'" [view]="'info'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="updateModal(modalBody, 'Update patient info', modalFooter, row)"></button>
+
+          <button tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="remove(row)" *ngIf="currentRole !== 'nurse'"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+</tc-card>
+<div class="add-action-box" *ngIf="(currentRole == 'chm-group' || currentRole != 'nurse') && 
+  (patients.length < (+carehomeDataObj?.num_patients || +adminPatientHospital))">
+  <button tc-button [afterIcon]="'icofont-people'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Patient', modalFooter, '')"></button>
+</div>
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="deleteOk()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-container>
+  <ng-template #modalBody>
+
+    <form [formGroup]="patientForm" novalidate class="new-patient-form">
+      <ng-wizard>
+        <ng-wizard-step [title]="'Step 1'">
+          <br>
+
+          <tc-form-group>
+            <input type="file" accept="image/*" formControlName="photo" (change)="onFileChanged($event)" #fileInput
+              hidden>
+
+            <div class="d-flex align-items-center">
+              <tc-avatar  [src]="currentAvatar" [size]="100"></tc-avatar>
+              <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
+                (click)="fileInput.click()">
+                Change photo
+              </button>
+            </div>
+          </tc-form-group>
+
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <tc-form-group>
+                <tc-input [placeholder]="'First Name'" formControlName="fname"></tc-input>
+                <div *ngIf="submitted && f.fname.errors" class="uk-form-danger">
+                  <div class="error-bt" *ngIf="f.fname.errors?.required">First name is required</div>
+                  <div class="error-bt" *ngIf="f.fname.errors?.pattern">Enter valid first name</div>
+                </div>
+              </tc-form-group>
+            </div>
+            <div class="col-12 col-sm-6">
+              <tc-form-group>
+                <tc-input [placeholder]="'Last Name'" formControlName="lname"></tc-input>
+                <div *ngIf="submitted && f.lname.errors" class="uk-form-danger">
+                  <div class="error-bt" *ngIf="f.lname.errors?.required">Last name is required</div>
+                  <div class="error-bt" *ngIf="f.lname.errors?.pattern">Enter valid last name</div>
+                </div>
+              </tc-form-group>
+            </div>
+          </div>
+
+          <tc-form-group>
+            <nz-year-picker nzPlaceHolder="Year of birth" [nzDisabledDate]="disabledDate" formControlName="dob" nzMode="year" nzFormat="yyyy">
+            </nz-year-picker>
+            <div *ngIf="submitted && f.dob.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.dob.errors?.required">Date of birth is required</div>
+            </div>
+          </tc-form-group>
+
+          <tc-form-group>
+            <div style="padding:10px;">
+              <tc-radio [direction]="'horizontal'" formControlName="gender">
+                <tc-radio-option [value]="'male'">Male</tc-radio-option>
+                <tc-radio-option [value]="'female'">Female</tc-radio-option>
+              </tc-radio>
+              <div *ngIf="submitted && f.gender.errors" class="uk-form-danger">
+                <div class="error-bt" *ngIf="f.gender.errors?.required">Patient Gender is required</div>
+              </div>
+            </div>
+          </tc-form-group>
+
+        </ng-wizard-step>
+
+        <ng-wizard-step [title]="'Step 2'">
+
+          <div>
+            <tc-form-group *ngIf="currentRole == 'super-admin' || currentRole == 'roc-admin'">
+              <tc-select (valueSelected)="onHospitalSelect($event)" [placeholder]="'Select Hospital'"
+                formControlName="hospital" [options]="hospitalData" [(ngModel)]="hospital_model" [disabled]="isEdit">
+              </tc-select>
+              <div *ngIf="submitted && f.hospital.errors" class="uk-form-danger">
+                <div class="error-bt" *ngIf="f.hospital.errors?.required">Select any one</div>
+              </div>
+            </tc-form-group>
+          </div>
+
+          <div *ngIf="!isEdit">
+            <tc-form-group *ngIf="currentRole == 'super-admin' || currentRole == 'roc-admin'">
+              <tc-select (valueSelected)="onCareHomeSelect($event)" [placeholder]="'Select Care Home'"
+                formControlName="care_home" [options]="carehomeData" [(ngModel)]="carehome_model" [disabled]="isEdit">
+              </tc-select>
+              <div *ngIf="submitted && f.care_home.errors" class="uk-form-danger">
+                <div class="error-bt" *ngIf="f.care_home.errors?.required">Select any one</div>
+              </div>
+            </tc-form-group>
+          </div>
+          
+          <tc-form-group>
+            <tc-textarea [placeholder]="'Address'" formControlName="address"></tc-textarea>
+            <div *ngIf="submitted && f.address.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.address.errors?.required">Address is required</div>
+            </div>
+          </tc-form-group>
+          <tc-form-group>
+            <tc-input [placeholder]="'NHS Number'" formControlName="nhs_number" [readonly]="isEdit"></tc-input>
+            <div *ngIf="submitted && f.nhs_number.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.nhs_number.errors?.required">NHS number is required</div>
+            </div>
+          </tc-form-group>
+          <!-- <tc-form-group style="display: none;">
+            <tc-select [placeholder]="'Select Patient Assessment level'" formControlName="patient_level"
+              [options]="assessmentData"></tc-select>
+            <div *ngIf="submitted && f.patient_level.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.patient_level.errors?.required">Please Select any one</div>
+            </div>
+          </tc-form-group>
+          <tc-form-group style="display: none;">
+            <tc-select [placeholder]="'Select Point of Entry'" [disabled]="isEdit" formControlName="point_of_entry"
+              [options]="entryPointData"></tc-select>
+            <div *ngIf="submitted && f.point_of_entry.errors" class="uk-form-danger">
+              <div class="error-bt" *ngIf="f.point_of_entry.errors?.required">Please Select any one</div>
+            </div>
+          </tc-form-group> -->
+        </ng-wizard-step>
+
+      </ng-wizard>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="updatePatient(patientForm.value)">
+        {{isEdit ? 'Update Patient' : 'Add Patient'}}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

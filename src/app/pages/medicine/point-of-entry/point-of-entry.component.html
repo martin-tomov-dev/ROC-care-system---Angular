@@ -1,0 +1,86 @@
+<tc-card class="mb-0">
+  <div class="col col-12 col-md-12 col-xl-4">
+    <tc-card [tcBgColor]="'#fbfbfb'" class="animated fadeInUp delay-01s">
+      <div class="row align-items-center">
+        <div class="col col-3">
+          <tc-icon [tcColor]="'rgba(51,108,251,0.5)'" [tcFontSize]="48" [iconClass]="'icofont-location-pin'" [padding]="0">
+          </tc-icon>
+        </div>
+
+        <div class="col col-9">
+          <h5 class="mt-0 mb-1 page-title">{{'Point Of Entry' | translate}} - {{pointOf_entry.length}}</h5>
+        </div>
+      </div>
+    </tc-card>
+  </div>
+  <tc-table [rows]="pointOf_entry" [hovered]="true" [pagination]="true" [search]="true" [headerBgColor]="'#336cfb'"
+    [headerColor]="'#fff'">
+
+    <tc-table-col [columnTitle]="'Point of entry from'" [columnName]="'entry_from'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Created At'" [columnName]="'created_at'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <strong>{{ value }}</strong>
+      </ng-template>
+    </tc-table-col>
+
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button tc-button [afterIcon]="'icofont-ui-edit'" [view]="'info'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="edit(row)"></button>
+
+          <button tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'" (click)="remove(row)"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+</tc-card>
+
+<div class="add-action-box">
+  <button tc-button [afterIcon]="'icofont-location-pin'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal(modalBody, 'Add Entry From', modalFooter)"></button>
+</div>
+<!-- Modal delete -->
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="deleteOk()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<!-- Modal window -->
+<ng-container>
+  <ng-template #modalBody>
+    <form [formGroup]="pointEntryForm" novalidate>
+
+      <tc-form-group>
+        <tc-input [placeholder]="'Enter entry from'" formControlName="entry_from"></tc-input>
+        <div *ngIf="submitted && f.entry_from.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.entry_from.errors?.required">Title is required</div>
+          <div class="error-bt" *ngIf="f.entry_from.errors?.pattern">Enter valid title</div>
+        </div>
+      </tc-form-group>
+
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="addEntryPoint(pointEntryForm.value)">
+        {{isEdit ? 'Edit Record' : 'Add Record'}}
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- end Modal window -->

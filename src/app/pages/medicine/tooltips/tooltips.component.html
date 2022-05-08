@@ -1,0 +1,29 @@
+<form novalidate [formGroup]="tooltipsForm" (ngSubmit)='submit()'>
+    <tc-form-group>
+        <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+                <tc-form-label class="mb-md-0 custom-label color-label">Label</tc-form-label>
+            </div>
+            <div class="col-12 col-md-8">
+                <tc-form-label class="mb-md-0 custom-label">Value</tc-form-label>
+            </div>
+        </div>
+    </tc-form-group>
+    <tc-form-group *ngFor="let tt of tooltips">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-4">
+                <tc-form-label class="mb-md-0">{{tt.name}}</tc-form-label>
+            </div>
+            <div class="col-12 col-md-8">
+                <tc-input [placeholder]="tt.name" formControlName={{tt.value}}></tc-input>
+                <div *ngIf="submitted && f[tt.value].errors" class="uk-form-danger">
+                    <div class="error-bt" *ngIf="f[tt.value].errors.required">This field is required</div>
+                </div>
+            </div>
+
+        </div>
+    </tc-form-group>
+
+    <button tc-button [block]="true" [outline]="true">Submit</button>
+
+</form>

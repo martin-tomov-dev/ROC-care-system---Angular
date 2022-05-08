@@ -1,0 +1,164 @@
+@import '../../../../assets/sass/variables';
+.chart-container {
+    align-items: center;
+    display: flex;
+    height: 400px;
+    justify-content: center;
+    width: 100%;
+    @media #{$max767} {
+        height: 300px;
+    }
+    canvas {
+        margin: 0 auto;
+        max-height: 100%;
+        width: auto !important;
+    }
+}
+
+:host /deep/ {
+    .amcharts-graph-g2 .amcharts-graph-stroke {
+        stroke-dasharray: 3px 3px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        animation: am-moving-dashes 1s linear infinite;
+    }
+    @keyframes am-moving-dashes {
+        100% {
+            stroke-dashoffset: -31px;
+        }
+    }
+    .lastBullet {
+        animation: am-pulsating 1s ease-out infinite;
+    }
+    @keyframes am-pulsating {
+        0% {
+            stroke-opacity: 1;
+            stroke-width: 0px;
+        }
+        100% {
+            stroke-opacity: 0;
+            stroke-width: 50px;
+        }
+    }
+    .amcharts-graph-column-front {
+        transition: all .3s .3s ease-out;
+    }
+    .amcharts-graph-column-front:hover {
+        fill: #496375;
+        stroke: #496375;
+        transition: all .3s ease-out;
+    }
+    .amcharts-graph-g3 {
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        stroke-dasharray: 500%;
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+        animation: am-draw 40s;
+    }
+    @keyframes am-draw {
+        0% {
+            stroke-dashoffset: 500%;
+        }
+        100% {
+            stroke-dashoffset: 0%;
+        }
+    }
+}
+
+@import '~src/assets/sass/variables';
+:host {
+    .address-col {
+        min-width: 130px;
+    }
+    .add-action-box {
+        bottom: $module-rem * 8;
+        position: fixed;
+        right: $module-rem * 2;
+        z-index: 9997;
+        .tc-btn {
+            font-size: 30px;
+        }
+    }
+    .actions {
+        display: flex;
+        margin: -$module-rem / 4;
+        .tc-btn {
+            margin: $module-rem / 4;
+        }
+    }
+}
+
+.col.col-12.col-md-6.col-xl-3.two-column-m {
+    @media #{$max767} {
+        max-width: 50%;
+    }
+    tc-icon {
+        font-size: 48px;
+        @media #{$max767} {
+            font-size: 30px;
+        }
+    }
+    .col.col-5.two-column-inner-m {
+        @media #{$max767} {
+            padding-left: 10px;
+            flex: 0 0 30.666667%;
+            max-width: 100%;
+        }
+    }
+    .col.col-7.two-column-inner-m {
+        @media #{$max767} {
+            flex: 0 0 70.33333333%;
+            padding: 0;
+        }
+    }
+    .two-column-inner-m {
+        .label-title {
+            @media #{$max767} {
+                font-size: 11px;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .two-column-m {
+        .custom-bg-color {
+            .card-content {
+                padding: 0 !important;
+            }
+        }
+    }
+    .mobile-order-1 {
+        order: 1;
+    }
+    .mobile-order-2 {
+        order: 2;
+    }
+    .mobile-order-3 {
+        order: 3;
+    }
+    .mobile-order-4 {
+        order: 4;
+    }
+    .mobile-order-5 {
+        order: 5;
+    }
+    .mobile-order-6 {
+        order: 6;
+    }
+    .mobile-hide{display: none;}
+    .desktop-hide{display: block !important;}
+    .desktop-hide .chat-container.container-h-400{margin-top: -45px;}
+    .roctodrikclass{margin: 20px 0px;}
+    .tc-card{margin-bottom: 0;}
+    .card-content{margin-top: 20px;}
+
+
+}
+.roctodrikclass {
+    font-size: 1.2rem; font-weight: 600; display:block; text-align: center;  width: 100%;
+}
+.desktop-hide{display: none;}
+
+

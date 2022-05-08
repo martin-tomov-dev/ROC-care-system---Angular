@@ -1,0 +1,36 @@
+@import '~src/assets/sass/variables';
+
+:host {
+  .address-col {
+    min-width: 130px;
+  }
+  .add-action-box {
+    bottom: $module-rem * 8;
+    position: fixed;
+    right: $module-rem * 2;
+    z-index: 9997;
+
+    .tc-btn {
+      font-size: 30px;
+    }
+  }
+  .actions {
+    display: flex;
+    margin: -$module-rem / 4;
+
+    .tc-btn {
+      margin: $module-rem / 4;
+    }
+  }
+}
+
+.error-bt {
+  color: #ff0000;
+  display: block;
+  margin: 5px 0 0 22px;
+  font-size: 13px;
+}
+// nz-date-picker{
+//   z-index: 9998 !important;
+// }
+

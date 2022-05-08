@@ -1,0 +1,137 @@
+@import '~src/assets/sass/variables';
+:host {
+    .address-col {
+        min-width: 130px;
+    }
+    .add-action-box {
+        bottom: $module-rem * 8;
+        position: fixed;
+        right: $module-rem * 2;
+        z-index: 9997;
+        .tc-btn {
+            font-size: 30px;
+        }
+    }
+    .actions {
+        display: flex;
+        margin: -$module-rem / 4;
+        .tc-btn {
+            margin: $module-rem / 4;
+        }
+    }
+}
+
+.error-bt {
+    color: #ff0000;
+    display: block;
+    margin: 5px 0 0 22px;
+    font-size: 13px;
+}
+
+.page-title {
+    color: rgba(31, 32, 34, 0.5);
+    font-size: 2rem;
+    margin: 0 0 1.42857143rem;
+}
+
+// nz-date-picker{
+//   z-index: 9998 !important;
+// }
+::ng-deep .cdk-overlay-container {
+    z-index: 9998 !important;
+}
+
+.progress {
+    display: flex;
+    height: 2rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    position: relative;
+}
+
+.progress-bar {
+    position: absolute !important;
+    height: 100% !important;
+}
+
+.progressText {
+    margin: 14px 28px 0 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    @media #{$max767} {
+        letter-spacing: 1.8px;
+        line-height: 2.5;
+        margin: 0;
+    }
+}
+
+
+/*.select-items {
+    padding: 7px 10px;
+    margin-left: 10px;
+    margin-bottom: 14px;
+    background: #336cfb;
+    border: none;
+    color: #fff;
+    width: 10%;
+}*/
+
+
+/* Remove IE arrow */
+
+select::-ms-expand {
+    display: none;
+}
+
+
+/* Custom Select wrapper */
+
+.select-items {
+    position: relative;
+    width: 15em;
+    height: 3em;
+    border-radius: 0.25em;
+    outline: 0;
+    box-shadow: none;
+    padding: 0 1em;
+    color: #1f2022;
+    background-image: none;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 14px;
+}
+
+
+/* Arrow */
+
+.select-items::after {
+    content: "\25BC";
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    transition: 0.25s all ease;
+    pointer-events: none;
+}
+
+.no-avatar {
+    position: absolute;
+    margin: -26px 3px;
+}
+
+.no-avatar :hover {
+    background-color: black !important;
+    color: black !important;
+    transform: none;
+}
+
+.mobile-hide {
+    @media #{$max767} {
+        display: none;
+    }
+}

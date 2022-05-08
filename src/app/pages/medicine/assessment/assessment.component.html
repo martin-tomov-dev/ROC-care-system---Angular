@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col col-12 col-md-12 mb-4 max-width-drink">
+    <form [formGroup]="assessmentForm" novalidate class="new-patient-form">
+      <!-- step 1 -->
+      <div *ngIf="step1">
+        <!-- (ngSubmit)="saveData(assessmentForm.value)" -->
+        <tc-form-group>
+          <tc-form-label>Select Patient</tc-form-label>
+          <tc-select [placeholder]="'Select Patient'" formControlName="selPatient" [options]="patientsData"
+            (valueSelected)="onPatientSelect($event)"></tc-select>
+          <div *ngIf="submitted1 && f.selPatient.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.selPatient.errors?.required">This is required</div>
+          </div>
+        </tc-form-group>
+
+        <tc-form-group>
+          <tc-form-label>Select Assessment Type</tc-form-label>
+          <tc-form-group>
+            <tc-radio (change)="onTypeSelect($event)" formControlName="selAssessment" [direction]="'vertical'">
+              <tc-radio-option [disabled]="f.selPatient.value == ''" [value]="'ROC to Drink'">ROC to Drink
+              </tc-radio-option>
+              <tc-radio-option [disabled]="f.selPatient.value == ''" [value]="'ROC to Eat'">ROC to Eat
+              </tc-radio-option>
+              <tc-radio-option [disabled]="f.selPatient.value == ''" [value]="'ROC to Holistic'">ROC to Holistic
+              </tc-radio-option>
+              <tc-radio-option [disabled]="f.selPatient.value == ''" [value]="'ROC to Mobility'">ROC to Mobility
+              </tc-radio-option>
+            </tc-radio>
+          </tc-form-group>
+          <div *ngIf="submitted1 && f.selAssessment.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.selAssessment.errors?.required">This is required</div>
+          </div>
+        </tc-form-group>
+
+        <button tc-button [view]="'success'" (click)="NextButton()" [disabled]="!nextEnable" [block]="true">
+          Next
+        </button>
+      </div>
+
+      <!-- step 2 -->
+      <div *ngIf="step2">
+        <tc-form-group>
+          <tc-form-label class="custom-title">{{f.selAssessment.value}}</tc-form-label>
+        </tc-form-group>
+        <tc-form-group>
+          <tc-form-label class="top-title">Select Rating</tc-form-label>
+          <!-- (change)="onTypeSelect($event)" formControlName="selAssessment" -->
+          <tc-form-group>
+            <div class="row">
+
+              <div class="col-md-6" *ngIf="f.selAssessment.value == 'ROC to Drink'">
+                <tc-form-label class="custom-lable" *ngFor="let dt of drinkTypeData; let i = index">
+                  <tc-checkbox formControlName="{{dt.value}}"></tc-checkbox>&nbsp;
+                  {{dt.title}}
+                </tc-form-label>
+              </div>
+
+              <div class="col-md-6" formArrayName="rooms">
+                <div *ngFor="let room of assessmentForm.get('rooms')['controls']; let i = index;" [formGroup]="room">
+                  <tc-form-label class="custom-title">{{assessmentForm.get('roomNo')['controls'][i].value.roomName}}
+                  </tc-form-label>
+                  <div class="custom-radio" *ngFor="let bed of bedsArray;let j = index;">
+                    <p class="{{bed.class}}">
+                      <input formControlName="bedsCount" id="{{i}}{{j}}" type="radio" [value]="bed.value">
+                      <label for="{{i}}{{j}}"></label>
+                    </p>
+                  </div>
+                  <span style="position: absolute;cursor: pointer;">
+                    <tc-icon [iconClass]="'icofont icofont-info-circle'" [tcFontSize]="22"
+                      (click)="onInfoClick(f.selAssessment.value,assessmentForm.get('roomNo')['controls'][i].value.roomName)">
+                    </tc-icon>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="error-bt" *ngIf="submitted2 && assessmentForm.invalid">
+              Please fill all assessment
+            </div>
+          </tc-form-group>
+        </tc-form-group>
+
+        <button tc-button [view]="'success'" (click)="finalClick()" [block]="true">
+          Save Data
+        </button>
+        <button tc-button [view]="'default'" (click)="BackButton()" [block]="true">
+          Back
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-container>
+  <ng-template #modalDelete>
+    <div class="actions justify-content-between">
+      <button tc-button [type]="'button'" [view]="'error'" (click)="modal.close()">Cancel</button>
+      <button tc-button [view]="'info'" (click)="saveData()">
+        Okay
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-container>
+  <ng-template #modalTooltip>
+    <div class="custom-tooltip" style="background-color: green;" *ngIf="ttGreen">{{ttGreen}}</div>
+    <div class="custom-tooltip" style="background-color: #ff7030;" *ngIf="ttOrange">{{ttOrange}}</div>
+    <div class="custom-tooltip" style="background-color: red;" *ngIf="ttRed">{{ttRed}}</div>
+  </ng-template>
+</ng-container>

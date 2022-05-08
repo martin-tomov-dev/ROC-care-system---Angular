@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+.error-bt {
+    color: #ff0000;
+    display: block;
+    margin: 5px 0 0 22px;
+    font-size: 13px;
+}
+.login-loader {
+  align-items: center;
+  /* background: #fff; */
+  color: #336cfb;
+  display: flex;
+  font-size: 30px;
+  height: 100%;
+  /* justify-content: center; */
+  /* left: 0; */
+  /* position: absolute; */
+  /* top: 0; */
+  /* width: 100%; */
+  z-index: 9999;
+}

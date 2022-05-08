@@ -1,0 +1,39 @@
+<tabset #staticTabs>
+    <tab heading="Language Label">
+        <div class="col-12 col-md-8" *ngIf="collData.length > 0">
+            <tc-card [title]="''">
+                <form [formGroup]="languageLabelForm" novalidate>
+                    <tc-form-group>
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-4">
+                                <tc-form-label class="mb-md-0 custom-label color-label">Label</tc-form-label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <tc-form-label class="mb-md-0 custom-label">Value</tc-form-label>
+                            </div>
+                        </div>
+                    </tc-form-group>
+                    <tc-form-group *ngFor="let lb of labelData">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-4">
+                                <tc-form-label class="mb-md-0">{{lb.label}}</tc-form-label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <tc-input [placeholder]='lb.label' [formControlName]="lb.key"></tc-input>
+                            </div>
+                        </div>
+                    </tc-form-group>
+                </form>
+
+                <button tc-button [block]="true" [outline]="true" (click)="updateLabel(languageLabelForm.value)">Update</button>
+            </tc-card>
+        </div>
+    </tab>
+    <tab heading="Tooltips configuration">
+        <div class="col-12 col-md-8">
+            <tc-card>
+                <app-tooltips></app-tooltips>
+            </tc-card>
+        </div>
+    </tab>
+</tabset>

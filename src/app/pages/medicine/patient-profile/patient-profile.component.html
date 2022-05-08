@@ -1,0 +1,297 @@
+<div class="row">
+    <div class="col col-12 col-md-6 mb-4" *ngIf="loaded">
+      <form [formGroup]="patientForm" novalidate class="new-patient-form" (ngSubmit)="saveData(patientForm.value)">
+        <tc-form-group>
+          <input type="file" accept="image/*" formControlName="photo" (change)="onFileChanged($event)" #fileInput hidden>
+          <div *ngIf="submitted && f.photo.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.photo.errors?.required">Patient profile is required</div>
+          </div>
+          <div class="d-flex align-items-center">
+            <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+            <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
+              (click)="fileInput.click()">
+              Change photo
+            </button>
+          </div>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>First name</tc-form-label>
+          <tc-input [placeholder]="'First Name'" formControlName="fname"></tc-input>
+          <div *ngIf="submitted && f.fname.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.fname.errors?.required">First name is required</div>
+            <div class="error-bt" *ngIf="f.fname.errors?.pattern">Enter valid first name</div>
+          </div>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Last name</tc-form-label>
+          <tc-input [placeholder]="'Last Name'" formControlName="lname"></tc-input>
+          <div *ngIf="submitted && f.lname.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.lname.errors?.required">Last name is required</div>
+            <div class="error-bt" *ngIf="f.lname.errors?.pattern">Enter valid last name</div>
+          </div>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Email Address</tc-form-label>
+          <tc-input [placeholder]="'Email'" formControlName="email"></tc-input>
+          <div *ngIf="submitted && f.email.errors">
+            <!-- <div class="error-bt" *ngIf="f.email.errors?.required">Email is required</div> -->
+            <div class="error-bt" *ngIf="f.email.errors?.pattern">Enter valid email address</div>
+          </div>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>NHS Number</tc-form-label>
+          <tc-input [placeholder]="'Id'" formControlName="nhs_number" [readonly]="true"></tc-input>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Patient Phone number</tc-form-label>
+          <tc-input [placeholder]="'Phone number'" formControlName="phone"></tc-input>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Hospital</tc-form-label>
+          <tc-input [placeholder]="'Hospital'" formControlName="hospital" [readonly]="true"></tc-input>
+        </tc-form-group>
+  
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Care Home Manager</tc-form-label>
+              <tc-input [placeholder]="'Care home'" [formControl]="patientForm.controls['care_home']" [readonly]="true">
+              </tc-input>
+            </tc-form-group>
+          </div>
+  
+          <div class="col-12 col-sm-6">
+            <!-- <tc-form-group>
+              <tc-form-label>Concern Care/Nurse</tc-form-label>
+              <tc-input [placeholder]="'Carer/Nurse'" formControlName="carer_id" [readonly]="true"></tc-input>
+            </tc-form-group> 
+          [formControl]="patientForm.controls['carer_id']"-->
+            <tc-form-group>
+              <tc-form-label>Concern Care/Nurse</tc-form-label>
+              <tc-select [placeholder]="'Select Carer'" [formControl]="patientForm.controls['carer_id']"
+                [disabled]="disableDropdown" [options]="carerDropdownData"></tc-select>
+            </tc-form-group>
+          </div>
+        </div>
+  
+        <tc-form-group>
+          <tc-form-label>Address</tc-form-label>
+          <tc-textarea [placeholder]="'Address'" formControlName="address"></tc-textarea>
+          <div *ngIf="submitted && f.address.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.address.errors?.required">Reason of Admitted is required</div>
+          </div>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Date of Birth</tc-form-label>
+          <nz-date-picker class="custom-picker" nzFormat="dd-MM-yyyy" nzPlaceHolder="Select date of birth"
+            [nzDisabledDate]="disabledDate" formControlName="dob">
+          </nz-date-picker>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Reason For admitted</tc-form-label>
+          <tc-textarea [placeholder]="'Reason for admitted'" formControlName="reason"></tc-textarea>
+          <div *ngIf="submitted && f.reason.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.reason.errors?.required">Reason of Admitted is required</div>
+          </div>
+        </tc-form-group>
+  
+        <!-- <tc-form-group>
+          <tc-form-label>Created By</tc-form-label>
+          <tc-input [placeholder]="'Created By'" formControlName="created_by" [readonly]="true"></tc-input>
+        </tc-form-group> -->
+  
+        <tc-form-group>
+          <tc-form-label>Patient Entry Point</tc-form-label>
+          <tc-input [placeholder]="'Entry Point'" formControlName="point_of_entry" [readonly]="true"></tc-input>
+        </tc-form-group>
+  
+  
+        <tc-form-group>
+          <tc-form-label>Patient Assessment Level</tc-form-label>
+          <tc-select [placeholder]="'Select Patient Assessment level'"
+            [formControl]="patientForm.controls['patient_level']" [options]="assessmentData"></tc-select>
+        </tc-form-group>
+  
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Next of Kin</tc-form-label>
+              <tc-input [placeholder]="'Next of kin'" formControlName="nextof_kin"></tc-input>
+            </tc-form-group>
+          </div>
+  
+          <div class="col-12 col-sm-6">
+            <tc-form-group>
+              <tc-form-label>Contact number for Next of Kin</tc-form-label>
+              <tc-input [placeholder]="'Contact'" formControlName="nextKin_phone"></tc-input>
+            </tc-form-group>
+          </div>
+        </div>
+  
+        <tc-form-group>
+          <tc-form-label>Created at</tc-form-label>
+          <tc-input [placeholder]="'Created at'" formControlName="created_at" [readonly]="true"></tc-input>
+        </tc-form-group>
+  
+        <tc-form-group>
+          <tc-form-label>Status</tc-form-label>
+          <tc-switcher [value]="status" [formControl]="patientForm.controls['is_active']"
+            [bgColor]="['red', 'red', 'green','green']" [borderColor]="['#ffffff', '#ffffff', '#ffffff']"
+            [color]="['#000', '#000', '#000']"></tc-switcher>
+        </tc-form-group>
+  
+        <button tc-button [view]="'success'" [disabled]="patientForm.invalid" [block]="true">
+          Save changes
+        </button>
+      </form>
+    </div>
+    <!-- assessmnet logs: -->
+    <div class="col col-12 col-md-6 mb-4" *ngIf="loaded">
+      <!-- roc drink logs -->
+      <tc-card class="mb-0">
+        <h3 class="custom-log">ROC to Drink <tc-icon [iconClass]="'icofont icofont-soft-drinks'" [tcFontSize]="21"></tc-icon></h3>
+        <br>
+        <tc-table [rows]="drinkLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+        
+  
+          <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{value}}</strong>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+            <ng-template #tableTDTemplate let-value>
+              <!-- <strong class="custom-capital">{{value.score}}</strong> -->
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+        </tc-table>
+      </tc-card>
+  
+      <!-- roc eat logs -->
+      <br>
+      <tc-card class="mb-0">
+        <h3 class="custom-log">ROC to Eat <tc-icon [iconClass]="'icofont icofont-fork-and-knife'" [tcFontSize]="21"></tc-icon></h3>
+        <br>
+        <tc-table [rows]="eatLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+          <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{value}}</strong>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+        </tc-table>
+      </tc-card>
+  
+      <!-- roc holistic logs -->
+      <br>
+      <tc-card class="mb-0">
+        <h3 class="custom-log">ROC to Holistic <tc-icon [iconClass]="'icofont icofont-cloud-refresh'" [tcFontSize]="21"></tc-icon></h3>
+        <br>
+        <tc-table [rows]="holisticLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+          <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+            <ng-template #tableTDTemplate let-value>
+              <strong class="custom-capital">{{value}}</strong>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Hearing'" [columnName]="'Hearing'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Vision'" [columnName]="'Vision'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Speech'" [columnName]="'Speech'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Recongition'" [columnName]="'Recongition'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+  
+          <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+            <ng-template #tableTDTemplate let-value>
+              <button tc-button [afterIcon]="'icofont-prescription'" [square]="true"
+                [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+            </ng-template>
+          </tc-table-col>
+        </tc-table>
+      </tc-card>
+    </div>
+  </div>
+
+  

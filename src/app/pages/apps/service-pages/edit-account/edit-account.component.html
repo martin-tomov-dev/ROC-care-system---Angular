@@ -1,0 +1,136 @@
+<div class="row justify-content-left" *ngIf="userInfo">
+  <div class="col col-12 col-xl-8">
+    <form
+      [formGroup]="userForm"
+      novalidate
+      class="mb-4"
+      (ngSubmit)="saveData(userForm.value)"
+    >
+      <!-- <tc-form-group>
+        <tc-form-label>Photo</tc-form-label>
+        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+
+        <div class="d-flex align-items-center">
+          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+          <button
+            tc-button
+            [type]="'button'"
+            [afterIcon]="'icofont-ui-user'"
+            [view]="'accent'"
+            [outline]="true"
+            (click)="fileInput.click()"
+          >
+            Change photo
+          </button>
+        </div>
+      </tc-form-group> -->
+
+      <tc-form-group>
+        <tc-form-label>First name</tc-form-label>
+        <tc-input [placeholder]="'First name'" formControlName="fname"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Last name</tc-form-label>
+        <tc-input [placeholder]="'Last name'" formControlName="lname"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Email Address</tc-form-label>
+        <tc-input [placeholder]="'Email Address'" formControlName="email" [readonly]="true"></tc-input>
+      </tc-form-group>
+      <!-- <tc-form-group>
+        <tc-form-label>Address</tc-form-label>
+        <tc-textarea [placeholder]="'Address'" formControlName="address"></tc-textarea>
+      </tc-form-group>  -->
+
+      <div class="row">
+        <div class="col">
+          <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
+            Save changes
+          </button>
+        </div>
+        <div class="col text-right">
+          <button
+            tc-button
+            [type]="'button'"
+            [view]="'error'"
+            [outline]="true"
+            [disabled]="true"
+          >
+            <span class="d-none d-sm-block">Delete account</span>
+            <span class="d-sm-none">Delete</span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+
+    <h4>Change password</h4>
+
+    <!-- <form [formGroup]="changePassForm" novalidate>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Current password</tc-form-label>
+            <tc-input formControlName="curr_pw" [placeholder]="'Current password'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>New password</tc-form-label>
+            <tc-input formControlName="new_pass" [placeholder]="'New password'"></tc-input>
+          </tc-form-group>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Confirm new password</tc-form-label>
+            <tc-input formControlName="cpass" [placeholder]="'Confirm new password'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+
+      <button tc-button [view]="'default'" (click)="changePass(changePassForm.value)" [outline]="true" [type]="'button'">
+        Change password
+      </button>
+    </form> -->
+    <form [formGroup]="changePassForm" novalidate>
+      <tc-form-group>
+        <tc-form-label>Current Password</tc-form-label>
+        <tc-input [placeholder]="'Current password'" [type]="'password'" formControlName="curr_pw"></tc-input>
+        <div *ngIf="submitted && f.curr_pw.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.curr_pw.errors?.required">Current password is required</div>
+          
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>New Password</tc-form-label>
+        <tc-input [placeholder]="'Password'" [type]="'password'" formControlName="password"></tc-input>
+        <div *ngIf="submitted && f.password.errors" class="uk-form-danger">
+          <div class="error-bt" *ngIf="f.password.errors?.required">Password is required</div>
+          <div class="error-bt" *ngIf="f.password.errors?.pattern">Passwords must contain at least eight characters, including uppercase, lowercase letters, Special characters and numbers. </div>
+        </div>
+      </tc-form-group>
+  
+      <tc-form-group>
+        <tc-form-label>Confirm Password</tc-form-label>
+          <tc-input [placeholder]="'Confirm Password'" [type]="'password'" formControlName="cpass"></tc-input>
+          <div *ngIf="submitted && f.cpass.errors" class="uk-form-danger">
+            <div class="error-bt" *ngIf="f.cpass.errors?.required">Confirm password is required</div>
+            <div class="error-bt" *ngIf="f.cpass.errors.confirmedValidator">Password and Confirm Password must be match</div>
+          </div>
+      </tc-form-group>
+      
+      <div class="actions justify-content-between">
+        <button (click)="changePass(changePassForm.value)" tc-button [view]="'accent'" [beforeIcon]="'icofont-login'">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

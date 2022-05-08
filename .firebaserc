@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "roc-care-systems-fc021": {
+      "hosting": {
+        "medic-app": [
+          "roc-care-systems-fc021"
+        ]
+      }
+    }
+  }
+}

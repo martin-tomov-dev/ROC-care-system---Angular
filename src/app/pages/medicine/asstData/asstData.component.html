@@ -1,0 +1,100 @@
+<div>
+  <tabset #staticTabs>
+    <tab heading="Assessments" id="0">
+      <br>
+      <br>
+      <tc-table *ngIf="dueData.length>0" [rows]="dueData" [hovered]="true" [pagination]="true" [headerBgColor]="'#336cfb'"
+        [headerColor]="'#fff'">
+        <tc-table-col [columnTitle]="'Name'" [columnName]="'fname'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{value}}</strong>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Assessment'" [columnName]="'Assessment'">
+          <ng-template #tableTDTemplate let-row="row">
+            <div class="actions" >
+              <p>{{row.msg}}</p>
+              <!-- <button tc-button [afterIcon]="'icofont-hour-glass'" [ngStyle]="{'background': '#444444'}" [square]="true"
+                [tcShape]="500" [size]="'sm'" (click)="goTo(row.id, 'Drink')"
+                *ngIf="row.drinkDue || !row?.drink">Drink</button> -->
+              <button tc-button [afterIcon]="'icofont-spoon-and-fork'" [ngStyle]="{'background': '#444444'}"
+                [square]="true" [tcShape]="500" [size]="'sm'" (click)="goTo(row.id, 'Eat')"
+                *ngIf="row.eatDue || !row.eat">Eat</button>
+              <button tc-button [afterIcon]="'icofont-fork-and-knife'" [ngStyle]="{'background': '#444444'}"
+                [square]="true" [tcShape]="500" [size]="'sm'" (click)="goTo(row.id, 'Holistic')"
+                *ngIf="row.holisticDue || !row?.holistic">Holistic</button>
+            
+            </div>
+          </ng-template>
+        </tc-table-col>
+      </tc-table>
+    </tab>
+    <!-- priority data -->
+    <!-- <tab heading="Priority Assessments" id="1">
+      <br>
+      <br>
+      <tc-table *ngIf="priorityData.length>0" [rows]="priorityData" [hovered]="true" [pagination]="true" [headerBgColor]="'#336cfb'"
+        [headerColor]="'#fff'">
+        <tc-table-col [columnTitle]="'Name'" [columnName]="'fname'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{value}}</strong>
+          </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Assessment'" [columnName]="'assessment'">
+          <ng-template #tableTDTemplate let-value let-row="row">
+            <div class="actions">
+              <button tc-button [afterIcon]="'icofont-hour-glass'" [square]="true"
+                [ngStyle]="{'background': value.drink ? value.drink :'#444444'} " [tcShape]="500" [size]="'sm'"
+                (click)="goTo(row.id, 'Drink')">Drink</button>
+
+              <button tc-button [afterIcon]="'icofont-spoon-and-fork'" [square]="true"
+                [ngStyle]="{'background': value.eat ? value.eat :'#444444'} " [tcShape]="500" [size]="'sm'"
+                (click)="goTo(row.id, 'Eat')">Eat</button>
+
+              <button tc-button [afterIcon]="'icofont-fork-and-knife'"
+                [ngStyle]="{'background': value.holistic ? value.holistic :'#444444'} " [square]="true" [tcShape]="500"
+                [size]="'sm'" (click)="goTo(row.id, 'Holistic')">Holistic</button>
+            </div>
+          </ng-template>
+        </tc-table-col>
+      </tc-table>
+    </tab> -->
+
+    <!-- Last assessments -->
+    <tab heading="Last Assessments" id="2">
+      <br><br>
+      <tc-table *ngIf="lastData.length>0" [rows]="lastData" [hovered]="true" [pagination]="true" [headerBgColor]="'#336cfb'"
+        [headerColor]="'#fff'">
+        <tc-table-col [columnTitle]="'Name'" [columnName]="'fname'" [enableSorting]="true">
+          <ng-template #tableTDTemplate let-value>
+            <strong class="custom-capital">{{value}}</strong>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Last Assessment'" [columnName]="'lastTime'">
+          <ng-template #tableTDTemplate let-value>
+            <strong>{{value}}</strong>
+          </ng-template>
+        </tc-table-col>
+
+        <tc-table-col [columnTitle]="'Assessment'" [columnName]="'assessment'">
+          <ng-template #tableTDTemplate let-value>
+            <div class="actions">
+              <button tc-button [afterIcon]="'icofont icofont-soft-drinks'" [square]="true"
+                [ngStyle]="{'background': value.drink ? value.drink :'#444444'} " [tcShape]="500"
+                [size]="'sm'">Drink</button>
+
+              <button tc-button [afterIcon]="'icofont-spoon-and-fork'" [square]="true"
+                [ngStyle]="{'background': value.eat ? value.eat :'#444444'} " [tcShape]="500" [size]="'sm'">Eat</button>
+
+              <button tc-button [afterIcon]="'icofont-fork-and-knife'"
+                [ngStyle]="{'background': value.holistic ? value.holistic :'#444444'} " [square]="true" [tcShape]="500"
+                [size]="'sm'">Holistic</button>
+            </div>
+          </ng-template>
+        </tc-table-col>
+      </tc-table>
+    </tab>
+  </tabset>
+</div>

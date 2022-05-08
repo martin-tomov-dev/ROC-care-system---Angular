@@ -1,0 +1,323 @@
+<div class="row" *ngIf="patients">
+    <div class="col col-12 col-md-6 mb -4 mb-md-0">
+        <tc-card [img]="'assets/content/imgpsh_fullsize_anim.jpg'" [tcGradient]="['#fff', '#fbfbfb']" class="personal-info-card">
+            <div class="d-flex align-items-center justify-content-between mb-3 user-actions">
+
+                <div class="d-flex align-items-center">
+                    <tc-avatar [src]="patients.photo ? patients.photo :currentAvatar" [size]="100"></tc-avatar>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between">
+                <h5>{{((currentRole == 'super-admin') || (currentRole == 'roc-admin')) ? '# ' + editId : (patients.fname + ' ' + patients.lname)}}</h5>
+                <!-- <h5 class="mb-0 mt-0 mr-1">{{ patients.fname }} {{ patients.lname }}</h5> -->
+                <!-- <h5># {{editId}}</h5> -->
+            </div>
+            <div class="actions justify-content-between">
+                <!-- (click)="openModal(modalBody, 'First Assessment', modalFooter)" -->
+                <span *ngIf="(!this.patients['drink'] && !this.patients['eat'] && !this.patients['holistic'])">
+                    <button style="background-color:#484848;" tc-button [view]="'primary'" [type]="'button'" (click)="goTo('Drink')">
+                        First Assessment
+                    </button></span>
+                <span><button  style="background-color:#484848;" tc-button [view]="'primary'" [type]="'button'"
+                        (click)="goToHydration()" >
+                         {{'ROC Point of Care' | translate}}</button> 
+                </span>
+                <span><button class="mr-left-10" style="background-color:#484848;" tc-button [view]="'primary'" [type]="'button'"
+                        (click)="goToLog()">
+                         {{'Point of care logs' | translate}}</button>
+                </span>       
+                <p>{{'Total intake values' | translate}}: {{patients.intake ? patients.intake : 0}}</p>
+                <span class="progress" *ngIf="patients">
+                    <span class="progress-bar" role="progressbar"
+                        attr.aria-valuenow="{{patients['intake'] ? ((patients['intake'] * 100) / totalBarValue) : 0}}" aria-valuemin="0"
+                        aria-valuemax="100" [ngStyle]="{'width': patients['intake'] ? (((patients['intake'] * 100) / totalBarValue) + '%') : 0}">
+                        <span class="sr-only">{{patients['intake'] ? (((patients['intake']) / totalBarValue) + '%') : 0}} %</span>
+                </span>
+                <p class="progressText">
+                    {{patients['intake'] >= totalBarValue ? 100 : ((patients['intake'] * 100) / totalBarValue ) | number}} %
+                </p>
+                </span>
+            </div>
+        </tc-card>
+        <br><br>
+            <!-- <tc-card [tcGradient]="['#fff', '#fbfbfb']" [title]="'Weekly Intake Chart'" class="mb-md-0" style="overflow: hidden;background-color: white;">
+            <div class="row align-items-center mb-5">
+                <ngx-charts-line-chart
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [xAxis]="xAxis"
+                    [yAxis]="yAxis"
+                    [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel"
+                    [timeline]="timeline"
+                    [results]="multi"
+                >
+                </ngx-charts-line-chart>
+            </div>     -->
+        <!-- </tc-card> -->
+        <tc-card [tcGradient]="['#fff', '#fbfbfb']" [title]="'Contact information'" class="mb-md-0">
+            <div class="row align-items-center mb-3" *ngIf="patients.phone">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-ui-touch-phone'" [tcFontSize]="30" [tcColor]="'#8f8f90'">
+                    </tc-icon>
+                </div>
+                <div class="col">
+                    <div>Phone</div>
+                    {{((currentRole == 'super-admin') || (currentRole == 'roc-admin')) ? '##########' : patients.phone}}
+                </div>
+            </div>
+
+            <div class="row align-items-center mb-3" *ngIf="patients.email">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-email'" [tcFontSize]="30" [tcColor]="'#8f8f90'"></tc-icon>
+                </div>
+                <div class="col">
+                    <div>Email</div>
+                    {{((currentRole == 'super-admin') || (currentRole == 'roc-admin')) ? '##########' : patients.email}}
+                </div>
+            </div>
+
+            <div class="row align-items-center mb-3" *ngIf="patients.nextof_kin">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-ui-user'" [tcFontSize]="30" [tcColor]="'#8f8f90'"></tc-icon>
+                </div>
+                <div class="col">
+                    <div>Next Of Kine</div>
+                    {{((currentRole == 'super-admin') || (currentRole == 'roc-admin')) ? '##########' : patients.nextof_kin}}
+                </div>
+            </div>
+
+            <div class="row align-items-center" *ngIf="patients.address">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-location-pin'" [tcFontSize]="30" [tcColor]="'#8f8f90'"></tc-icon>
+                </div>
+                <div class="col">
+                    <div>Address</div>
+                    {{((currentRole == 'super-admin') || (currentRole == 'roc-admin')) ? '##########' : patients.address}}
+                </div>
+            </div>
+        </tc-card>
+    </div>
+
+    <div class="col col-12 col-md-6">
+        <!-- <tc-card [title]="'Patient Journey'" [tcGradient]="['#fff', '#fbfbfb']">
+            <tc-v-timeline [data]="patients.timeLine" [showIcons]="false"></tc-v-timeline>
+        </tc-card> -->
+
+        <tc-card [tcGradient]="['#fff', '#fbfbfb']" [title]="'Other information'">
+            <div class="row align-items-center mb-3" *ngIf="patients.carer_id">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-nurse'" [tcFontSize]="30" [tcColor]="'#8f8f90'"></tc-icon>
+                </div>
+                <div class="col">
+                    <div>Concern carer</div>
+                    {{ patients.carer_id['fname']}}
+                </div>
+            </div>
+
+            <div class="row align-items-center mb-3" *ngIf="patients.care_home && currentRole != 'nurse' && currentRole != 'carehome-manager'">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-user-suited'" [tcFontSize]="30" [tcColor]="'#8f8f90'">
+                    </tc-icon>
+                </div>
+                <div class="col">
+                    <div>Carehome Manager</div>
+                    {{ patients.care_home['fname']}}
+                </div>
+            </div>
+
+            <div class="row align-items-center mb-3" *ngIf="patients.hospital && currentRole != 'nurse' && currentRole != 'carehome-manager'">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-hospital'" [tcFontSize]="30" [tcColor]="'#8f8f90'"></tc-icon>
+                </div>
+                <div class="col">
+                    <div>Hospital</div>
+                    {{ patients.hospital['name']}}
+                </div>
+            </div>
+
+            <div class="row align-items-center mb-3" *ngIf="patients.birthDate">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-birthday-cake'" [tcFontSize]="30" [tcColor]="'#8f8f90'">
+                    </tc-icon>
+                </div>
+                <div class="col">
+                    <div>Date of Birth</div>
+                    {{ patients.birthDate}}
+                </div>
+            </div>
+
+            <div class="row align-items-center" *ngIf="patients.gender">
+                <div class="col col-auto">
+                    <tc-icon [iconClass]="'icofont-live-messenger'" [tcFontSize]="30" [tcColor]="'#8f8f90'">
+                    </tc-icon>
+                </div>
+                <div class="col">
+                    <div>Gender</div>
+                    {{ patients.gender}}
+                </div>
+            </div>
+        </tc-card>
+        <!-- assessmnet logs: -->
+        <tc-card [tcGradient]="['#fff', '#fbfbfb']" [title]="'Assessment logs'" class="mb-md-0">
+            <div class="col col-12" *ngIf="loaded">
+                <!-- roc drink logs -->
+                <h4 class="custom-log">ROC to Drink
+                    <tc-icon [iconClass]="'icofont icofont-soft-drinks'" [tcFontSize]="21"></tc-icon>
+                </h4>
+                <br>
+                <tc-table [rows]="drinkLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+                    <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+                        <ng-template #tableTDTemplate let-value>
+                            <strong class="custom-capital">{{value}}</strong>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+                        <ng-template #tableTDTemplate let-value>
+                            <!-- <strong class="custom-capital">{{value.score}}</strong> -->
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                </tc-table>
+                <!-- roc eat logs -->
+                <br>
+                <h4 class="custom-log">ROC to Eat
+                    <tc-icon [iconClass]="'icofont icofont-fork-and-knife'" [tcFontSize]="21"></tc-icon>
+                </h4>
+                <br>
+                <tc-table [rows]="eatLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+                    <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+                        <ng-template #tableTDTemplate let-value>
+                            <strong class="custom-capital">{{value}}</strong>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Swallow'" [columnName]="'Swallow'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Assist'" [columnName]="'Assist'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Encourage'" [columnName]="'Encourage'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+                </tc-table>
+
+                <!-- roc holistic logs -->
+                <br>
+                <h4 class="custom-log">ROC to Holistic
+                    <tc-icon [iconClass]="'icofont icofont-cloud-refresh'" [tcFontSize]="21"></tc-icon>
+                </h4>
+                <br>
+                <tc-table [rows]="holisticLogs" [hovered]="true" [pagination]="true" [headerColor]="'black'">
+                    <tc-table-col [columnTitle]="'Assessment Time'" [columnName]="'asmt_time'">
+                        <ng-template #tableTDTemplate let-value>
+                            <strong class="custom-capital">{{value}}</strong>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Hearing'" [columnName]="'Hearing'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Vision'" [columnName]="'Vision'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Speech'" [columnName]="'Speech'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Recongition'" [columnName]="'Recognition'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value ? value :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+
+                    <tc-table-col [columnTitle]="'Rating'" [columnName]="'rating'">
+                        <ng-template #tableTDTemplate let-value>
+                            <button tc-button [afterIcon]="'icofont-prescription'" [square]="true" [ngStyle]="{'background': value.color ? value.color :'#444444'} " [tcShape]="500" [size]="'sm'"></button>
+                        </ng-template>
+                    </tc-table-col>
+                </tc-table>
+            </div>
+        </tc-card>
+
+    </div>
+    <ng-container>
+        <ng-template #modalBody>
+            <form [formGroup]="hydrationForm" novalidate>
+                <tc-form-group>
+                    <tc-radio (change)="onTypeSelect($event)" formControlName="intake" [direction]="'vertical'">
+                        <tc-radio-option [value]="'full'">Full cup
+                        </tc-radio-option>
+                        <tc-radio-option [value]="'half'">1/2 cup
+                        </tc-radio-option>
+                        <tc-radio-option [value]="'threeforth'">3/4 cup
+                        </tc-radio-option>
+                        <tc-radio-option [value]="'oneThird'">1/4 cup
+                        </tc-radio-option>
+                        <tc-radio-option [value]="'few_sips'">Few sips
+                        </tc-radio-option>
+                        <tc-radio-option [value]="'none'">None
+                        </tc-radio-option>
+                    </tc-radio>
+                    <div *ngIf="submitted && f.intake.errors">
+                        <div class="error-bt" *ngIf="f.intake.errors?.required">Please select a value</div>
+                    </div>
+                </tc-form-group>
+            </form>
+        </ng-template>
+
+        <ng-template #modalFooter>
+            <div class="actions justify-content-between">
+                <button tc-button [type]="'button'" [view]="'error'" (click)="closeModal()">Cancel</button>
+                <button tc-button [type]="'button'" (click)="addHydration()">
+                    Add Record
+                </button>
+            </div>
+        </ng-template>
+    </ng-container>
+
+</div>
