@@ -4,14 +4,14 @@
       <!-- step 1 -->
       <div *ngIf="step1">
         <!-- (ngSubmit)="saveData(assessmentForm.value)" -->
-        <!-- <tc-form-group>
+        <tc-form-group>
           <tc-form-label>Select Patient</tc-form-label>
           <tc-select [placeholder]="'Select Patient'" formControlName="selPatient" [options]="patientsData"
             (valueSelected)="onPatientSelect($event)"></tc-select>
           <div *ngIf="submitted1 && f.selPatient.errors" class="uk-form-danger">
             <div class="error-bt" *ngIf="f.selPatient.errors?.required">This is required</div>
           </div>
-        </tc-form-group> -->
+        </tc-form-group>
 
         <tc-form-group>
           <tc-form-label>Select Assessment Type</tc-form-label>
